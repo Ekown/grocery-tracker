@@ -1,6 +1,7 @@
 require('dotenv').config();
 const path = require('path');
 const express = require('express');
+const pg = require('pg');
 
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
@@ -13,6 +14,7 @@ const app = express();
 const Sequelize = require("sequelize-cockroachdb");
 const connectionString = process.env.DATABASE_URL;
 const sequelize = new Sequelize(connectionString, {
+    dialectModule: pg,
     dialect: 'postgres',
 });
 
