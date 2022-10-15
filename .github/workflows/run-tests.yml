@@ -1,9 +1,9 @@
-name: Node.js CI
+name: Run tests
 
 on:
   push:
     branches:
-      - '**' # Will run on all push on any branch
+      - master # Ignores when pushing to the master branch
   pull_request:
     branches:
       - '**' # Will run on all pull requests on any branch
