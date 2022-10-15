@@ -2,8 +2,8 @@ name: Node.js CI
 
 on:
   push:
-    branches-ignore:
-      - master # Ignores when pushing to the master branch
+    branches:
+      - '**' # Will run on all push on any branch
   pull_request:
     branches:
       - '**' # Will run on all pull requests on any branch
