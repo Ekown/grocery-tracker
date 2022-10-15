@@ -1,9 +1,30 @@
+require('dotenv').config();
 const path = require('path');
 const express = require('express');
+
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 
 const PORT = process.env.PORT || 3001;
 
 const app = express();
+
+const Sequelize = require("sequelize-cockroachdb");
+const connectionString = process.env.DATABASE_URL;
+const sequelize = new Sequelize(connectionString, {
+    dialect: 'postgres',
+});
+
+(async () => {
+    try {
+        await sequelize.authenticate();
+        console.log('Connection has been established successfully.');
+    } catch (error) {
+        console.error('Unable to connect to the database:', error);
+    }
+})();
+
 
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, '../client/build')));
