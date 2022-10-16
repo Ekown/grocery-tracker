@@ -16,7 +16,6 @@
  */
  const local = {
     API_URL: 'http://localhost:3001',
-    // API_URL: 'https://grocery-tracker-app.onrender.com',
 };
 
 /**
@@ -37,10 +36,10 @@ const config = () => {
     let config;
 
     if (process.env.REACT_APP_STAGE === 'production') {
-        config =  prod;
+        config = prod;
+    } else {
+        config = local;
     }
-
-    config = local;
 
     return {
         ...common,
