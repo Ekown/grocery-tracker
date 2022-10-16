@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Server-side API for the Grocery Tracker app",
   "main": "index.js",
-  "engines": {
-    "node": "14.19.0"
-  },
   "scripts": {
     "migrate:up": "npx sequelize-cli db:migrate",
     "migrate:undo": "npx sequelize-cli db:migrate:undo"
