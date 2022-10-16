@@ -7,8 +7,6 @@
     "node": "14.19.0"
   },
   "scripts": {
-    "migrate:up": "npx sequelize-cli db:migrate",
-    "migrate:undo": "npx sequelize-cli db:migrate:undo"
   },
   "repository": {
     "type": "git",
