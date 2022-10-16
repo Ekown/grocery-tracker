@@ -7,12 +7,7 @@ function App() {
   const [data, setData] = React.useState(null);
 
   React.useEffect(() => {
-    fetch(`${config.API_URL}/api`, {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
-      }
-    })
+    fetch(`${config.API_URL}/api`)
       .then((res) => res.json())
       .then((data) => setData(data.message));
   }, []);

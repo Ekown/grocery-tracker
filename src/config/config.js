@@ -15,8 +15,8 @@
  * The variables to use in ENV environment when is run locally
  */
  const local = {
-    // API_URL: 'http://localhost:3001',
-    API_URL: 'https://grocery-tracker-app.onrender.com',
+    API_URL: 'http://localhost:3001',
+    // API_URL: 'https://grocery-tracker-app.onrender.com',
 };
 
 /**

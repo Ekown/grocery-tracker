@@ -32,9 +32,14 @@ const sequelize = new Sequelize(connectionString, {
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
+// Allow CORS Header
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    next();
+});
+
 // Handle GET requests to /api route
 app.get("/api", (req, res) => {
-    res.set('Access-Control-Allow-Origin', '*');
     res.setHeader('Content-Type', 'text/html');
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     res.json({ message: "Hello from server!" });
