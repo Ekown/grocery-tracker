@@ -7,6 +7,8 @@
     "node": "14.19.0"
   },
   "scripts": {
+    "migrate:up": "npx sequelize-cli db:migrate",
+    "migrate:undo": "npx sequelize-cli db:migrate:undo"
   },
   "repository": {
     "type": "git",
@@ -25,7 +27,9 @@
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.25.1",
-    "sequelize-cli": "^6.5.1",
     "sequelize-cockroachdb": "^6.0.5"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.5.1"
   }
 }
