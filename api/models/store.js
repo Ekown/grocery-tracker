@@ -2,9 +2,8 @@
 const {
   Model
 } = require('sequelize');
-const Invoice = require('./invoice');
 module.exports = (sequelize, DataTypes) => {
-  class Cashier extends Model {
+  class Store extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,24 +11,23 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Cashier.belongsTo(Invoice);
     }
   }
-  Cashier.init({
+  Store.init({
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    address: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Cashier',
+    modelName: 'Store',
     underscored: true,
-    timestamps: true,
     paranoid: true,
     createdAt: 'date_entered',
     updatedAt: 'date_modified',
     deletedAt: 'date_deleted',
   });
-  return Cashier;
+  return Store;
 };
