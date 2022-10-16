@@ -1,12 +1,18 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import config from './config/config';
 
 function App() {
   const [data, setData] = React.useState(null);
 
   React.useEffect(() => {
-    fetch("/api")
+    fetch(`${config.API_URL}/api`, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+      }
+    })
       .then((res) => res.json())
       .then((data) => setData(data.message));
   }, []);
