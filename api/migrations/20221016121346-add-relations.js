@@ -15,6 +15,11 @@ module.exports = {
       references: { model: 'Categories', key: 'id' }
     });
 
+    await queryInterface.addColumn('Items', 'product_id', {
+      type: Sequelize.UUID,
+      references: { model: 'Products', key: 'id' }
+    });
+
     await queryInterface.addColumn('InvoiceItems', 'item_id', {
       type: Sequelize.UUID,
       references: { model: 'Items', key: 'id' }
