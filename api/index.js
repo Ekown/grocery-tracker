@@ -18,6 +18,7 @@ const sequelize = new Sequelize(connectionString, {
     dialect: 'postgres',
 });
 
+// Try to connect to the CockroachDB instance
 (async () => {
     try {
         await sequelize.authenticate();
