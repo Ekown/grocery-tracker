@@ -34,14 +34,18 @@ const common = {
 };
 
 const config = () => {
+    let config;
+
     if (process.env.REACT_APP_STAGE === 'production') {
-        return prod;
+        config =  prod;
     }
 
-    return local;
+    config = local;
+
+    return {
+        ...common,
+        ...config,
+    };
 };
 
-export default {
-    ...common,
-    ...config()
-};
+export default config();
