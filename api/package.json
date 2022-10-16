@@ -7,7 +7,7 @@
     "node": "14.19.0"
   },
   "scripts": {
-    "start": "npm run migrate:up",
+    "build": "npm run migrate:up",
     "migrate:up": "npx sequelize-cli db:migrate",
     "migrate:undo": "npx sequelize-cli db:migrate:undo"
   },
