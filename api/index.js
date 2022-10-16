@@ -34,20 +34,7 @@ app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 // Handle GET requests to /api route
 app.get("/api", (req, res) => {
-    res.setHeader('Content-Type', 'text/html');
-    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-    res.json({ message: "Hello from server!" });
-});
-
-// Handle GET requests to /api route
-app.get("/api/test1", (req, res) => {
-    res.setHeader('Content-Type', 'text/html');
-    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-    res.json({ message: "Hello from server!" });
-});
-
-// Handle GET requests to /api route
-app.get("/api/test2", (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
     res.setHeader('Content-Type', 'text/html');
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     res.json({ message: "Hello from server!" });
