@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { createWorker } from "tesseract.js"
+import { createWorker } from "tesseract.js";
 
 // OCR Statuses
 const STATUSES = {
@@ -10,10 +10,10 @@ const STATUSES = {
 }
 
 function OcrReader({onReadOcrData, onRemoveClicked}) {
-  const [selectedImage, setSelectedImage] = useState(null)
-  const [ocrState, setOcrState] = useState(STATUSES.IDLE)
-  const worker = createWorker()
-  
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [ocrState, setOcrState] = useState(STATUSES.IDLE);
+  const worker = createWorker();
+
   // Process image with OCR
   const readImageText = async() => {
     setOcrState(STATUSES.PENDING)
