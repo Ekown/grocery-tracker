@@ -12,6 +12,7 @@
     "tesseract.js": "^3.0.3",
     "web-vitals": "^2.1.4"
   },
+  "proxy": "https://grocery-tracker-app.onrender.com",
   "scripts": {
     "start": "react-scripts start",
     "build": "npm run test && react-scripts build",
