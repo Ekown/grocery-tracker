@@ -1,39 +1,38 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import OcrReader from "./components/OcrReader/OcrReader";
 import config from "./config/config";
+import ScaleLoader from "react-spinners/ClipLoader";
+
 
 function App() {
   const [data, setData] = useState(null);
-  const [ocrData, setOcrData] = useState("");
-
-  // Receive OCR data as a prop from the child component
-  const onReadOcrData = (ocrData) => {
-    setOcrData(ocrData)
-  }
-
-  // Prop detects that the change image button was clicked
-  const onRemoveClicked = () => {
-    setOcrData("")
-  }
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     fetch(`${config.API_URL}/api`)
       .then(res => res.json())
-      .then(data => setData(data.message));
+      .then(data => setData(data.message))
+      .then(() => setLoading(false));  
   }, []);
 
   return (
     <div className="App">
-      <div>
+    { loading ? 
+      <div className="loader-container">
+        <ScaleLoader
+          color="limegreen"
+          loading={loading}
+          size={150}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
+       :
+      <div className="main-content">
         <p>{!data ? "Loading..." : data}</p>
       </div>
-      <header>Welcome to the OCR app!</header>
-      <OcrReader
-        onReadOcrData={onReadOcrData}
-        onRemoveClicked={onRemoveClicked}
-      />
-      {ocrData}
+    }      
     </div>
   );
 }
