@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import config from "./config/config";
-import ScaleLoader from "react-spinners/ClipLoader";
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
     <div className="App">
     { loading ? 
       <div className="loader-container">
-        <ScaleLoader
+        <ClipLoader
           color="limegreen"
           loading={loading}
           size={150}
