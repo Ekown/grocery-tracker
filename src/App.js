@@ -1,25 +1,40 @@
-import React from "react";
-import logo from "./logo.svg";
+import { useEffect, useState } from "react";
 import "./App.css";
-import config from './config/config';
+import OcrReader from "./components/OcrReader/OcrReader";
+import config from "./config/config";
 
 function App() {
-  const [data, setData] = React.useState(null);
+  const [data, setData] = useState(null);
+  const [ocrData, setOcrData] = useState("");
 
-  React.useEffect(() => {
+  // Receive OCR data as a prop from the child component
+  const onReadOcrData = (ocrData) => {
+    setOcrData(ocrData)
+  }
+
+  // Prop detects that the change image button was clicked
+  const onRemoveClicked = () => {
+    setOcrData("")
+  }
+
+  useEffect(() => {
     fetch(`${config.API_URL}/api`)
-      .then((res) => res.json())
-      .then((data) => setData(data.message));
+      .then(res => res.json())
+      .then(data => setData(data.message));
   }, []);
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+      <div>
         <p>{!data ? "Loading..." : data}</p>
-      </header>
+      </div>
+      <header>Welcome to the OCR app!</header>
+      <OcrReader
+        onReadOcrData={onReadOcrData}
+        onRemoveClicked={onRemoveClicked}
+      />
+      {ocrData}
     </div>
   );
 }
-
 export default App;

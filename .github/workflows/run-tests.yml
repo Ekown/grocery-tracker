@@ -1,34 +1,32 @@
-# TODO: Run tests in Github Actions before deploying to Vercel to split costs between them
-# name: Run tests
+name: Run tests
 
-# on:
-#   push:
-#     branches-ignore:
-#       - master # Ignores when pushing to the master branch
-#   pull_request:
-#     branches:
-#       - '**' # Will run on all pull requests on any branch
+on:
+  push:
+    branches-ignore:
+      - master # Ignores when pushing to the master branch
+  pull_request:
+    branches:
+      - '**' # Will run on all pull requests on any branch
 
 
-# jobs:
-#   build:
+jobs:
+  build:
 
-#     runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-#     strategy:
-#       matrix:
-#         os: [ubuntu-latest, windows-2016]
-#         node-version: [12.x, 14.x, 16.x]
-#         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-2016]
+        node-version: [14.x, 16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
-#     steps:
-#     - uses: actions/checkout@v2
-#     - name: Use Node.js ${{ matrix.node-version }}
-#       uses: actions/setup-node@v2
-#       with:
-#         node-version: ${{ matrix.node-version }}
-#         cache: 'npm'
-#     - run: cd client
-#     - run: npm ci
-#     - run: npm run build --if-present
-#     - run: npm test
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
