@@ -19,7 +19,7 @@ function App() {
   }, []);
 
   return (
-    <Container className="App">
+    <div className="App">
       {loading ?
         <div className="loader-container">
           <ClipLoader
@@ -31,15 +31,17 @@ function App() {
           />
         </div>
         :
-        <div className="main-content">
-          <p>{!data ? "Loading..." : data}</p>
-          <div>
-            <Button variant="primary">Add Invoice</Button>
-            <Button variant="primary">View Invoice</Button>
+        <Container>
+          <div className="main-content">
+            <p>{!data ? "Loading..." : data}</p>
+            <div>
+              <Button variant="primary">Add Invoice</Button>
+              <Button variant="primary">View Invoice</Button>
+            </div>
           </div>
-        </div>
+        </Container>
       }
-    </Container>
+    </div>
   );
 }
 export default App;
