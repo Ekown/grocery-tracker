@@ -2,9 +2,10 @@
 const {
   Model
 } = require('sequelize');
-const Branch = require('./branch');
+const Invoice = require('./invoice');
+const Store = require('./store');
 module.exports = (sequelize, DataTypes) => {
-  class Store extends Model {
+  class Branch extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,12 +13,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Store.hasMany(Branch, {
-        foreignKey: 'store_id',
+      Branch.belongsTo(Store);
+      Branch.hasOne(Invoice, {
+        foreignKey: 'branch_id',
       });
     }
   }
-  Store.init({
+  Branch.init({
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
@@ -26,12 +28,13 @@ module.exports = (sequelize, DataTypes) => {
     address: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Store',
+    modelName: 'Branch',
     underscored: true,
+    timestamps: true,
     paranoid: true,
     createdAt: 'date_entered',
     updatedAt: 'date_modified',
     deletedAt: 'date_deleted',
   });
-  return Store;
+  return Branch;
 };

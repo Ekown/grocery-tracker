@@ -5,6 +5,7 @@ const {
 const InvoiceItem = require('./invoiceitem');
 const Bagger = require('./bagger');
 const Cashier = require('./cashier');
+const Branch = require('./branch');
 module.exports = (sequelize, DataTypes) => {
   class Invoice extends Model {
     /**
@@ -23,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       Invoice.hasOne(Bagger, {
         foreignKey: 'invoice_id',
       });
+      Invoice.belongsTo(Branch);
     }
   }
   Invoice.init({
