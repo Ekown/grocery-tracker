@@ -10,7 +10,9 @@ import {
 import Home from "./pages/home";
 import NotFoundPage from "./pages/404";
 import AddInvoice from "./pages/invoice/add-invoice";
-import { Container } from "react-bootstrap";
+import { Container } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -27,7 +29,7 @@ function App() {
   }, []);
 
   return (
-    <React.StrictMode>
+    <div>
       {loading ?
         <div className="loader-container">
           <ClipLoader
@@ -39,21 +41,24 @@ function App() {
           />
         </div>
         :
-        <Container className="App">
-          <Router>
-            <Routes>
-              <Route path="/grocery-tracker">
-                <Route path="home" element={<Home />} />
-                <Route path="invoice">
-                  <Route path="add" element={<AddInvoice />} />
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <Container fixed className="App">
+            <Router>
+              <Routes>
+                <Route path="/grocery-tracker">
+                  <Route path="home" element={<Home />} />
+                  <Route path="invoice">
+                    <Route path="add" element={<AddInvoice />} />
+                  </Route>
+                  <Route path="*" element={<NotFoundPage />} />
                 </Route>
-                <Route path="*" element={<NotFoundPage />} />
-              </Route>
-            </Routes>
-          </Router>
-        </Container>
+              </Routes>
+            </Router>
+          </Container>
+        </LocalizationProvider>
+
       }
-    </React.StrictMode>
+    </div>
   );
 }
 export default App;

@@ -1,0 +1,16 @@
+.add-invoice {
+    .form-row {
+        margin-top: 1.5rem;
+        text-align: left;
+
+        form {
+            div:not(:nth-of-type(1)) {
+                margin-top: .5rem;
+            }
+
+            .transaction-date {
+                margin: 0 !important;
+            }
+        }
+    }
+}
