@@ -28,18 +28,18 @@ function App() {
 
   return (
     <React.StrictMode>
-      <Container className="App">     
-        {loading ?
-          <div className="loader-container">
-            <ClipLoader
-              color="limegreen"
-              loading={loading}
-              size={150}
-              aria-label="Loading Spinner"
-              data-testid="loader"
-            />
-          </div>
-          :
+      {loading ?
+        <div className="loader-container">
+          <ClipLoader
+            color="limegreen"
+            loading={loading}
+            size={150}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
+        :
+        <Container className="App">
           <Router>
             <Routes>
               <Route path="/grocery-tracker">
@@ -51,8 +51,8 @@ function App() {
               </Route>
             </Routes>
           </Router>
-        }
-      </Container>
+        </Container>
+      }
     </React.StrictMode>
   );
 }
