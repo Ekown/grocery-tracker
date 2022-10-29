@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.UUIDV4
     },
     name: DataTypes.STRING,
-    address: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Store',
