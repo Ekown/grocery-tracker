@@ -12,7 +12,6 @@ const NotFoundPage = () => {
             <Row>
                 <Col>
                     <div className="not-found-wrapper">
-                        {/* <img src={logo} alt={config.webTitle} /> */}
                         <h1>{errorCode}</h1>
                         <p>{errorMsg}</p>
                         <Button as={Link} to="home">Back to Home</Button>

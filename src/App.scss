@@ -44,6 +44,7 @@ html *
 
 .App {
   text-align: center;
+  margin-top: 1.5rem;
 }
 
 .loader-container {
@@ -56,4 +57,8 @@ html *
   position: fixed;
   background: rgba(0, 0, 0, 0.834);
   z-index: 1;
+}
+
+a {
+  text-decoration: none !important;
 }

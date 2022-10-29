@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./App.css";
+import "./App.scss";
 import config from "./config/config";
 import ClipLoader from "react-spinners/ClipLoader";
 import {
@@ -9,6 +9,8 @@ import {
 } from 'react-router-dom';
 import Home from "./pages/home";
 import NotFoundPage from "./pages/404";
+import AddInvoice from "./pages/invoice/add-invoice";
+import { Container } from "react-bootstrap";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -26,7 +28,7 @@ function App() {
 
   return (
     <React.StrictMode>
-      <div className="App">
+      <Container className="App">     
         {loading ?
           <div className="loader-container">
             <ClipLoader
@@ -42,12 +44,15 @@ function App() {
             <Routes>
               <Route path="/grocery-tracker">
                 <Route path="home" element={<Home />} />
+                <Route path="invoice">
+                  <Route path="add" element={<AddInvoice />} />
+                </Route>
                 <Route path="*" element={<NotFoundPage />} />
               </Route>
             </Routes>
           </Router>
         }
-      </div>
+      </Container>
     </React.StrictMode>
   );
 }
