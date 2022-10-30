@@ -1,9 +1,11 @@
 import React from 'react';
+import config from "../../../config/config";
 import './add-invoice.scss';
 import Grid2 from '@mui/material/Unstable_Grid2';
-import { Autocomplete, CircularProgress, Container, Stack, TextField } from '@mui/material';
+import { Autocomplete, Container, Stack, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
+import CustomAutocomplete from '../../../components/shared/atoms/custom-autocomplete/custom-autocomplete';
 
 class AddInvoice extends React.Component {
     constructor() {
@@ -20,8 +22,17 @@ class AddInvoice extends React.Component {
                 bagger: null,
             },
         };
+    }
 
-        this.loading = this.state.selectOptions.cashiers.length === 0;
+    fetchCashiers() {
+        fetch(`${config.API_URL}/api/cashiers/list`)
+            .then(res => res.json())
+            .then(data => {
+                // if (data && data.message === 'Hello from server!') {
+                //     setLoading(false);
+                // }
+                console.log(data);
+            });
     }
 
     render() {
@@ -53,29 +64,10 @@ class AddInvoice extends React.Component {
                                 />
                             </Grid2>
                             <Grid2>
-                                <Autocomplete
-                                    selectOnFocus
-                                    clearOnBlur
-                                    handleHomeEndKeys
-                                    freeSolo
+                                <CustomAutocomplete
                                     value={this.state.formData.cashier}
-                                    options={this.state.selectOptions.cashiers}
-                                    loading={this.loading}
-                                    renderInput={(params) =>
-                                        <TextField
-                                            {...params}
-                                            label="Cashier"
-                                            InputProps={{
-                                                ...params.InputProps,
-                                                endAdornment: (
-                                                    <React.Fragment>
-                                                        {this.loading ? <CircularProgress color="inherit" size={20} /> : null}
-                                                        {params.InputProps.endAdornment}
-                                                    </React.Fragment>
-                                                ),
-                                            }}
-                                        />
-                                    }
+                                    // options={this.state.selectOptions.cashiers}
+                                    fetchOptions={() => this.fetchCashiers()}
                                 />
                             </Grid2>
                             <Grid2>
