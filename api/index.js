@@ -12,11 +12,14 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 const Sequelize = require("sequelize-cockroachdb");
+const { exit } = require('process');
 const connectionString = process.env.DATABASE_URL;
 const sequelize = new Sequelize(connectionString, {
     dialectModule: pg,
     dialect: 'postgres',
 });
+
+const cashiers = require('./routers/cashiers');
 
 // Try to connect to the CockroachDB instance
 (async () => {
@@ -25,9 +28,9 @@ const sequelize = new Sequelize(connectionString, {
         console.log('Connection has been established successfully.');
     } catch (error) {
         console.error('Unable to connect to the database:', error);
+        exit();
     }
 })();
-
 
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, '../client/build')));
@@ -44,6 +47,9 @@ app.get("/api", (req, res) => {
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     res.json({ message: "Hello from server!" });
 });
+
+// Use cashiers router
+app.use('/api/cashiers', cashiers);
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
