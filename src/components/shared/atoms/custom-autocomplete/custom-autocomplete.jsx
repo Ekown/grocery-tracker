@@ -54,7 +54,7 @@ class CustomAutocomplete extends React.Component {
                 renderInput={(params) =>
                     <TextField
                         {...params}
-                        label="Cashier"
+                        label={this.props.label}
                         InputProps={{
                             ...params.InputProps,
                             endAdornment: (

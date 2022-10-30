@@ -20,6 +20,26 @@ class AddInvoice extends React.Component {
         };
     }
 
+    /**
+     * Fetch all baggers from the API
+     * 
+     * @returns {Promise<Response>}
+     */
+    fetchBaggers() {
+        return fetch(`${config.API_URL}/api/baggers/list`)
+            .then(res => res.json())
+            .then(data => {
+                if (data) {
+                    return data;
+                }
+            });
+    }
+
+    /**
+     * Fetch all cashiers from the API
+     * 
+     * @returns {Promise<Response>}
+     */
     fetchCashiers() {
         return fetch(`${config.API_URL}/api/cashiers/list`)
             .then(res => res.json())
@@ -60,19 +80,16 @@ class AddInvoice extends React.Component {
                             </Grid2>
                             <Grid2>
                                 <CustomAutocomplete
+                                    label="Cashier"
                                     value={this.state.formData.cashier}
                                     fetchOptions={() => this.fetchCashiers()}
                                 />
                             </Grid2>
                             <Grid2>
-                                <Autocomplete
-                                    selectOnFocus
-                                    clearOnBlur
-                                    handleHomeEndKeys
-                                    freeSolo
+                                <CustomAutocomplete
+                                    label="Bagger"
                                     value={this.state.formData.bagger}
-                                    options={[]}
-                                    renderInput={(params) => <TextField {...params} label="Bagger" />}
+                                    fetchOptions={() => this.fetchBaggers()}
                                 />
                             </Grid2>
                         </Stack>
