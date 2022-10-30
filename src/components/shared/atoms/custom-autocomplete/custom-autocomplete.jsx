@@ -11,9 +11,15 @@ class CustomAutocomplete extends React.Component {
             loading: false,
             options: [],
         };
+
+        this.value = props.value;
     }
 
     componentDidUpdate(prevProps) {
+    }
+
+    handleChange(event, value) {
+        this.props.onChange(value);
     }
 
     async fetchOptions() {
@@ -31,18 +37,23 @@ class CustomAutocomplete extends React.Component {
                 clearOnBlur
                 handleHomeEndKeys
                 freeSolo
+                // value={this.value}
+                name={this.props.name}
                 open={this.state.open}
-                value={this.props.value}
                 options={this.state.options}
                 loading={this.state.loading}
                 isOptionEqualToValue={(option, value) => option.name === value.name}
                 getOptionLabel={(option) => option.name}
+                onChange={(e, v) => this.handleChange(e, v)}
                 onOpen={() => {
                     this.setState({
                         open: true,
                         loading: this.state.options.length === 0
                     }, () => {
-                        this.fetchOptions();
+                        // We should only fetch the options once
+                        if (this.state.options.length === 0) {
+                            this.fetchOptions();
+                        }
                     });
                 }}
                 onClose={() => {

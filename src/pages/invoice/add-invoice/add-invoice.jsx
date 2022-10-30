@@ -2,7 +2,7 @@ import React from 'react';
 import config from "../../../config/config";
 import './add-invoice.scss';
 import Grid2 from '@mui/material/Unstable_Grid2';
-import { Autocomplete, Container, Stack, TextField } from '@mui/material';
+import { Container, Stack, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import CustomAutocomplete from '../../../components/shared/atoms/custom-autocomplete/custom-autocomplete';
@@ -81,15 +81,39 @@ class AddInvoice extends React.Component {
                             <Grid2>
                                 <CustomAutocomplete
                                     label="Cashier"
+                                    name="cashier"
                                     value={this.state.formData.cashier}
                                     fetchOptions={() => this.fetchCashiers()}
+                                    onChange={(value) => {
+                                        this.setState(prevState => {
+                                            return {
+                                                ...prevState,
+                                                formData: {
+                                                    ...prevState.formData,
+                                                    cashier: value,
+                                                }
+                                            };
+                                        });
+                                    }}
                                 />
                             </Grid2>
                             <Grid2>
                                 <CustomAutocomplete
                                     label="Bagger"
+                                    name="bagger"
                                     value={this.state.formData.bagger}
                                     fetchOptions={() => this.fetchBaggers()}
+                                    onChange={(value) => {
+                                        this.setState(prevState => {
+                                            return {
+                                                ...prevState,
+                                                formData: {
+                                                    ...prevState.formData,
+                                                    bagger: value,
+                                                }
+                                            };
+                                        });
+                                    }}
                                 />
                             </Grid2>
                         </Stack>
