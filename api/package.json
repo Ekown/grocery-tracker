@@ -4,6 +4,7 @@
   "description": "Server-side API for the Grocery Tracker app",
   "main": "index.js",
   "scripts": {
+    "start-dev": "npm run migrate:up && nodemon index.js",
     "start": "npm run migrate:up && nodejs index.js",
     "migrate:up": "npx sequelize-cli db:migrate",
     "migrate:undo": "npx sequelize-cli db:migrate:undo",
