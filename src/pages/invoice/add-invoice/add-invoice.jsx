@@ -12,10 +12,6 @@ class AddInvoice extends React.Component {
         super();
 
         this.state = {
-            selectOptions: {
-                cashiers: [],
-                baggers: [],
-            },
             formData: {
                 transactionDate: dayjs(new Date()), //Initialize the transaction date to the current day
                 cashier: null,
@@ -25,13 +21,12 @@ class AddInvoice extends React.Component {
     }
 
     fetchCashiers() {
-        fetch(`${config.API_URL}/api/cashiers/list`)
+        return fetch(`${config.API_URL}/api/cashiers/list`)
             .then(res => res.json())
             .then(data => {
-                // if (data && data.message === 'Hello from server!') {
-                //     setLoading(false);
-                // }
-                console.log(data);
+                if (data) {
+                    return data;
+                }
             });
     }
 
@@ -66,7 +61,6 @@ class AddInvoice extends React.Component {
                             <Grid2>
                                 <CustomAutocomplete
                                     value={this.state.formData.cashier}
-                                    // options={this.state.selectOptions.cashiers}
                                     fetchOptions={() => this.fetchCashiers()}
                                 />
                             </Grid2>

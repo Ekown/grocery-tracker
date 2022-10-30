@@ -16,8 +16,12 @@ class CustomAutocomplete extends React.Component {
     componentDidUpdate(prevProps) {
     }
 
-    fetchOptions() {
-        this.props.fetchOptions();
+    async fetchOptions() {
+        const options = await this.props.fetchOptions();
+
+        if (options) {
+            this.setState({options: options, loading: false});
+        }
     }
 
     render() {
@@ -31,6 +35,8 @@ class CustomAutocomplete extends React.Component {
                 value={this.props.value}
                 options={this.state.options}
                 loading={this.state.loading}
+                isOptionEqualToValue={(option, value) => option.name === value.name}
+                getOptionLabel={(option) => option.name}
                 onOpen={() => {
                     this.setState({
                         open: true,
