@@ -1,4 +1,5 @@
-const express = require('express')
+const express = require('express');
+const db = require('../models');
 const router = express.Router()
 
 // middleware that is specific to this router
@@ -14,8 +15,22 @@ const router = express.Router()
 // })
 
 // Handle requests to /api/cashiers/list
-router.get('/list', (req, res) => {
-  res.send([]);
+router.get('/list', async (req, res) => {
+    try {
+        const result = await db.sequelize.transaction(async (t) => {
+            const cashiers = await db['Cashier'].findAll({
+                order: [['name', 'ASC']],
+            });
+
+            return cashiers;
+        });
+
+        if (result) {
+            res.send(result);
+        }
+    } catch (error) {
+        console.error('There was an error when retrieving all cashiers: ', error);
+    }
 })
 
 module.exports = router
