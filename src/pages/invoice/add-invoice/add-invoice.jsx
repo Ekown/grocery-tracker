@@ -1,7 +1,7 @@
 import React from 'react';
 import './add-invoice.scss';
 import Grid2 from '@mui/material/Unstable_Grid2';
-import { Autocomplete, Container, Stack, TextField } from '@mui/material';
+import { Autocomplete, CircularProgress, Container, Stack, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 
@@ -20,6 +20,8 @@ class AddInvoice extends React.Component {
                 bagger: null,
             },
         };
+
+        this.loading = this.state.selectOptions.cashiers.length === 0;
     }
 
     render() {
@@ -57,8 +59,23 @@ class AddInvoice extends React.Component {
                                     handleHomeEndKeys
                                     freeSolo
                                     value={this.state.formData.cashier}
-                                    options={[]}
-                                    renderInput={(params) => <TextField {...params} label="Cashier" />}
+                                    options={this.state.selectOptions.cashiers}
+                                    loading={this.loading}
+                                    renderInput={(params) =>
+                                        <TextField
+                                            {...params}
+                                            label="Cashier"
+                                            InputProps={{
+                                                ...params.InputProps,
+                                                endAdornment: (
+                                                    <React.Fragment>
+                                                        {this.loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                                        {params.InputProps.endAdornment}
+                                                    </React.Fragment>
+                                                ),
+                                            }}
+                                        />
+                                    }
                                 />
                             </Grid2>
                             <Grid2>

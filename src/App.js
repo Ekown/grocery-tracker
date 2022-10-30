@@ -7,9 +7,9 @@ import {
   Route,
   Routes
 } from 'react-router-dom';
-import Home from "./pages/home";
-import NotFoundPage from "./pages/404";
-import AddInvoice from "./pages/invoice/add-invoice";
+import Home from "./pages/home/home";
+import NotFoundPage from "./pages/404/404";
+import AddInvoice from "./pages/invoice/add-invoice/add-invoice";
 import { Container } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
