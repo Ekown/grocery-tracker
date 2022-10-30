@@ -2,8 +2,7 @@
 const {
   Model
 } = require('sequelize');
-const InvoiceItem = require('./invoiceitem');
-const Product = require('./product');
+
 module.exports = (sequelize, DataTypes) => {
   class Item extends Model {
     /**
@@ -13,16 +12,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Item.hasOne(Product, {
-        foreignKey: 'product_id',
+      Item.belongsTo(models['Product']);
+      Item.hasMany(models['InvoiceItem'], {
+        foreignKey: 'item_id',
       });
-      Item.belongsTo(InvoiceItem);
     }
   }
   Item.init({
     id: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
     sku: DataTypes.BIGINT,
     size: DataTypes.STRING

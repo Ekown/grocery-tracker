@@ -2,7 +2,7 @@
 const {
   Model
 } = require('sequelize');
-const Branch = require('./branch');
+
 module.exports = (sequelize, DataTypes) => {
   class Store extends Model {
     /**
@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Store.hasMany(Branch, {
+      Store.hasMany(models['Branch'], {
         foreignKey: 'store_id',
       });
     }
@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
   Store.init({
     id: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
     name: DataTypes.STRING,
   }, {

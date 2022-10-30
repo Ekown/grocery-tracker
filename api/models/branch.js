@@ -2,8 +2,7 @@
 const {
   Model
 } = require('sequelize');
-const Invoice = require('./invoice');
-const Store = require('./store');
+
 module.exports = (sequelize, DataTypes) => {
   class Branch extends Model {
     /**
@@ -13,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Branch.belongsTo(Store);
-      Branch.hasOne(Invoice, {
+      Branch.belongsTo(models['Store']);
+      Branch.hasMany(models['Invoice'], {
         foreignKey: 'branch_id',
       });
     }
@@ -22,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
   Branch.init({
     id: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
     name: DataTypes.STRING,
     address: DataTypes.STRING

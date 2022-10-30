@@ -2,10 +2,7 @@
 const {
   Model
 } = require('sequelize');
-const InvoiceItem = require('./invoiceitem');
-const Bagger = require('./bagger');
-const Cashier = require('./cashier');
-const Branch = require('./branch');
+
 module.exports = (sequelize, DataTypes) => {
   class Invoice extends Model {
     /**
@@ -15,22 +12,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Invoice.hasMany(InvoiceItem, {
+      Invoice.hasMany(models['InvoiceItem'], {
         foreignKey: 'invoice_id',
       });
-      Invoice.hasOne(Cashier, {
-        foreignKey: 'invoice_id',
-      });
-      Invoice.hasOne(Bagger, {
-        foreignKey: 'invoice_id',
-      });
-      Invoice.belongsTo(Branch);
+      Invoice.belongsTo(models['Cashier']);
+      Invoice.belongsTo(models['Bagger']);
+      Invoice.belongsTo(models['Branch']);
     }
   }
   Invoice.init({
     id: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
     subtotal: DataTypes.DECIMAL,
     discount: DataTypes.DECIMAL,

@@ -2,7 +2,7 @@
 const {
   Model
 } = require('sequelize');
-const Invoice = require('./invoice');
+
 module.exports = (sequelize, DataTypes) => {
   class Cashier extends Model {
     /**
@@ -12,13 +12,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Cashier.belongsTo(Invoice);
+      // Cashier.belongsTo(models['Invoice'], {
+      //   foreignKey: 'cashier_id',
+      // });
+      Cashier.hasMany(models['Invoice'], {
+        foreignKey: 'cashier_id',
+      });
     }
   }
   Cashier.init({
     id: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
     name: DataTypes.STRING
   }, {

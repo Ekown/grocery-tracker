@@ -2,7 +2,7 @@
 const {
   Model
 } = require('sequelize');
-const Product = require('./product');
+
 module.exports = (sequelize, DataTypes) => {
   class Category extends Model {
     /**
@@ -12,13 +12,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Category.belongsTo(Product);
+      Category.hasMany(models['Product'], {
+        foreignKey: 'category_id',
+      });
     }
   }
   Category.init({
     id: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
     name: DataTypes.STRING
   }, {

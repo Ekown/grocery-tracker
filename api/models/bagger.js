@@ -2,7 +2,7 @@
 const {
   Model
 } = require('sequelize');
-const Invoice = require('./invoice');
+
 module.exports = (sequelize, DataTypes) => {
   class Bagger extends Model {
     /**
@@ -12,13 +12,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Bagger.belongsTo(Invoice);
+      // Bagger.belongsTo(models['Invoice']);
+      Bagger.hasMany(models['Invoice'], {
+        foreignKey: 'bagger_id',
+      });
     }
   }
   Bagger.init({
     id: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
     name: DataTypes.STRING
   }, {
