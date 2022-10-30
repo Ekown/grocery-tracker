@@ -35,12 +35,14 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    return Promise.all([
-      queryInterface.dropTable('Branches', { transaction: t }),
-      queryInterface.addColumn('Invoices', 'store_id', {
-        type: Sequelize.UUID,
-        references: { model: 'Stores', key: 'id' }
-      }, { transaction: t }),
-    ]);
+    return queryInterface.sequelize.transaction(t => {
+      return Promise.all([
+        queryInterface.dropTable('Branches', { transaction: t }),
+        queryInterface.addColumn('Invoices', 'store_id', {
+          type: Sequelize.UUID,
+          references: { model: 'Stores', key: 'id' }
+        }, { transaction: t }),
+      ]);
+    });
   }
 };
