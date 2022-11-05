@@ -1,5 +1,5 @@
 // React
-import { Container, Divider, List } from '@mui/material';
+import { List } from '@mui/material';
 import React from 'react';
 import ItemCard from '../../atoms/item-card/item-card';
 import './item-list.scss';

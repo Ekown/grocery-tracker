@@ -2,7 +2,7 @@ import React from 'react';
 import config from "../../../config/config";
 import './add-invoice.scss';
 import Grid2 from '@mui/material/Unstable_Grid2';
-import { Card, CardContent, Container, Divider, Stack, TextField } from '@mui/material';
+import { Card, CardContent, Container, Stack, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import CustomAutocomplete from '../../../components/shared/atoms/custom-autocomplete/custom-autocomplete';

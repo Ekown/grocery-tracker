@@ -1,7 +1,8 @@
 // React
-import { Avatar, Card, IconButton, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
+import { Avatar, IconButton, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import React from 'react';
+import './item-card.scss';
 
 class ItemCard extends React.Component {
     constructor(props) {
@@ -18,6 +19,8 @@ class ItemCard extends React.Component {
     render() {
         return (
             <ListItem
+                className="item-card"
+                alignItems="flex-start"
                 secondaryAction={
                     <IconButton edge="end" aria-label="delete">
                         <DeleteIcon />
@@ -25,7 +28,12 @@ class ItemCard extends React.Component {
                 }
             >
                 <ListItemAvatar>
-                    <Avatar variant="rounded" src={this.props.imageSrc}></Avatar>
+                    <Avatar
+                        variant="rounded"
+                        src={this.props.imageSrc}
+                        sx={{ width: 56, height: 56 }}
+                        alt={this.props.name}
+                    ></Avatar>
                 </ListItemAvatar>
                 <ListItemText
                     primary={
