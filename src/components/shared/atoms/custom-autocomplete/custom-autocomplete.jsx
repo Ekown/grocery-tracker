@@ -38,6 +38,7 @@ class CustomAutocomplete extends React.Component {
                 handleHomeEndKeys
                 freeSolo
                 // value={this.value}
+                size={this.props.size ?? 'medium'}
                 name={this.props.name}
                 open={this.state.open}
                 options={this.state.options}
