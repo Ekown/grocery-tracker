@@ -42,7 +42,7 @@ function App() {
         </div>
         :
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <Container fixed className="App">
+          <Container fixed className="App" sx={{ bgcolor: '#efefef' }}>
             <Router>
               <Routes>
                 <Route path="/grocery-tracker">
