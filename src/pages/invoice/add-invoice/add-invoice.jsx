@@ -6,7 +6,8 @@ import { Card, CardContent, Container, Stack, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import CustomAutocomplete from '../../../components/shared/atoms/custom-autocomplete/custom-autocomplete';
-import ItemList from '../../../components/shared/organisms/item-list/item-list';
+import ItemList from '../../../components/shared/molecules/item-list/item-list';
+import MultiStep from 'react-multistep';
 
 class AddInvoice extends React.Component {
     constructor() {
@@ -19,6 +20,10 @@ class AddInvoice extends React.Component {
                 bagger: null,
             },
         };
+
+        this.steps = [
+            { title: 'Invoice Details', component: <InvoiceDetails /> }
+        ];
     }
 
     /**
@@ -62,7 +67,28 @@ class AddInvoice extends React.Component {
                     <Grid2 xs={12}>
                         <Card>
                             <CardContent>
+                                <MultiStep activeStep={1} showNavigation={true} steps={this.steps} />
                                 <Stack xs={12}>
+                                    <Grid2>
+                                        <CustomAutocomplete
+                                            size="small"
+                                            label="Cashier"
+                                            name="cashier"
+                                            value={this.state.formData.cashier}
+                                            fetchOptions={() => this.fetchCashiers()}
+                                            onChange={(value) => {
+                                                this.setState(prevState => {
+                                                    return {
+                                                        ...prevState,
+                                                        formData: {
+                                                            ...prevState.formData,
+                                                            cashier: value,
+                                                        }
+                                                    };
+                                                });
+                                            }}
+                                        />
+                                    </Grid2>
                                     <Grid2>
                                         <DatePicker
                                             label="Transaction Date"
