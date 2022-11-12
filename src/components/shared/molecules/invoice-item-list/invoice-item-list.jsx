@@ -15,7 +15,7 @@ class InvoiceItemList extends React.Component {
 
     render() {
         return (
-            <ItemList />
+            <ItemList className="invoice-item-list" />
         );
     }
 }

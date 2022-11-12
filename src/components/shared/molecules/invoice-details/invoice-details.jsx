@@ -51,7 +51,7 @@ class InvoiceDetails extends React.Component {
 
     render() {
         return (
-            <Stack xs={12}>
+            <Stack xs={12} className="invoice-details">
                 <Grid2>
                     <CustomAutocomplete
                         size="small"

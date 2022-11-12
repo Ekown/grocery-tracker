@@ -3,7 +3,7 @@ import './add-invoice.scss';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import { Card, CardContent, Container } from '@mui/material';
 import dayjs from 'dayjs';
-import MultiStep from 'react-multistep';
+import StepZilla from "react-stepzilla";
 import InvoiceDetails from '../../../components/shared/molecules/invoice-details/invoice-details';
 import InvoiceItemList from '../../../components/shared/molecules/invoice-item-list/invoice-item-list';
 
@@ -20,8 +20,8 @@ class AddInvoice extends React.Component {
         };
 
         this.steps = [
-            { title: 'Details', component: <InvoiceDetails formData={this.state.formData} /> },
-            { title: 'Items', component: <InvoiceItemList formData={this.state.formData} /> },
+            { name: 'Details', component: <InvoiceDetails formData={this.state.formData} /> },
+            { name: 'Items', component: <InvoiceItemList /> },
         ];
     }
 
@@ -36,7 +36,13 @@ class AddInvoice extends React.Component {
                     <Grid2 xs={12}>
                         <Card>
                             <CardContent>
-                                <MultiStep activeStep={0} showNavigation={true} steps={this.steps} />
+                                <StepZilla
+                                    steps={this.steps}
+                                    nextButtonText="NEXT"
+                                    backButtonText="PREVIOUS"
+                                    backButtonCls="btn primary"
+                                    nextButtonCls="btn primary"
+                                />
                             </CardContent>
                         </Card>
                     </Grid2>

@@ -32,13 +32,13 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
 
-html *
-{
+html * {
   font-family: 'Noto Sans Japanese', sans-serif;
 }
 
@@ -65,4 +65,24 @@ a {
 
 .title {
   text-align: center;
+}
+
+.btn {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  box-sizing: border-box;
+  cursor: pointer;
+  appearance: none;
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+  border-radius: 4px;
+  letter-spacing: 0.02857em;
+  outline: 0;
+  border: 0;
+  margin: 0;
+  padding: 10px;
+
+  &.primary {
+    color: white;
+    border: 1px solid #1976d2;
+    background-color: #1976d2;
+  }
 }

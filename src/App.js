@@ -13,6 +13,7 @@ import AddInvoice from "./pages/invoice/add-invoice/add-invoice";
 import { Container } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import './styles/react-stepzilla.scss';
 
 function App() {
   const [loading, setLoading] = useState(false);
