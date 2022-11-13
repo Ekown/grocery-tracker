@@ -31,6 +31,30 @@ router.get('/list', async (req, res) => {
     } catch (error) {
         console.error('There was an error when retrieving all stores: ', error);
     }
-})
+});
+
+// Handle requests to /api/stores/:storeId/branch
+router.get('/:storeId/branch', async (req, res) => {
+    try {
+        const result = await db.sequelize.transaction(async (t) => {
+            const store = await db['Store'].findByPk(req.params.storeId);
+
+            // Return an empty array if the store is not found
+            if (store === null) {
+                console.log(`Store ${req.params.storeId} not found`);
+                return [];
+            } else {
+                // Return all the branches of the store
+                return branches = store.getBranches();
+            }
+        });
+
+        if (result) {
+            res.send(result);
+        }
+    } catch (error) {
+        console.error('There was an error when retrieving store branches: ', error);
+    }
+});
 
 module.exports = router
