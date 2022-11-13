@@ -12,21 +12,52 @@ class CustomAutocomplete extends React.Component {
             options: [],
         };
 
-        this.value = props.value;
+        this.setInputValue(props.value);
     }
 
     componentDidUpdate(prevProps) {
+        // Reset the autocomplete branch field when the selected store is changed
+        if (prevProps.name === 'branch' && prevProps.store !== this.props.store) {
+            this.setState({ options: [] }, () => {
+                this.handleChange(null, null);
+            });
+        }
     }
 
+    componentWillUnmount() {
+        this.setState({ options: [] }, () => {
+            this.handleChange(null, null);
+        });
+    }
+
+    /**
+     * Set the autocomplete input value 
+     * 
+     * @param {Object} value 
+     */
+     setInputValue(value) {
+        this.inputValue = value?.name ?? '';
+    }
+
+    /**
+     * Handle field changes
+     * 
+     * @param {Object|Event} event 
+     * @param {Object} value 
+     */
     handleChange(event, value) {
+        this.setInputValue(value);
         this.props.onChange(value);
     }
 
+    /**
+     * Trigger the fetch option function and store the fetched options
+     */
     async fetchOptions() {
         const options = await this.props.fetchOptions();
 
         if (options) {
-            this.setState({options: options, loading: false});
+            this.setState({ options: options, loading: false });
         }
     }
 
@@ -38,6 +69,7 @@ class CustomAutocomplete extends React.Component {
                 handleHomeEndKeys
                 freeSolo
                 // value={this.value}
+                inputValue={this.inputValue}
                 size={this.props.size ?? 'medium'}
                 name={this.props.name}
                 open={this.state.open}

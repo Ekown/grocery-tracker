@@ -20,14 +20,80 @@ class AddInvoice extends React.Component {
                 bagger: null,
             },
         };
+    }
 
-        this.steps = [
-            { name: 'Details', component: <InvoiceDetails formData={this.state.formData} /> },
-            { name: 'Items', component: <InvoiceItemList /> },
-        ];
+    /**
+     * Set form field change handlers for lifting state up
+     */
+    setFormChangeHandlers() {
+        this.formChanges = {
+            store: (store) => {
+                this.setState(prevState => {
+                    return {
+                        ...prevState,
+                        formData: {
+                            ...prevState.formData,
+                            store: store,
+                        }
+                    };
+                });
+            },
+            branch: (branch) => {
+                this.setState(prevState => {
+                    return {
+                        ...prevState,
+                        formData: {
+                            ...prevState.formData,
+                            branch: branch,
+                        }
+                    };
+                });
+            },
+            transactionDate: (transactionDate) => {
+                this.setState(prevState => {
+                    return {
+                        ...prevState,
+                        formData: {
+                            ...prevState.formData,
+                            transactionDate: transactionDate,
+                        }
+                    };
+                });
+            },
+            cashier: (cashier) => {
+                this.setState(prevState => {
+                    return {
+                        ...prevState,
+                        formData: {
+                            ...prevState.formData,
+                            cashier: cashier,
+                        }
+                    };
+                });
+            },
+            bagger: (bagger) => {
+                this.setState(prevState => {
+                    return {
+                        ...prevState,
+                        formData: {
+                            ...prevState.formData,
+                            bagger: bagger,
+                        }
+                    };
+                });
+            },
+        }
     }
 
     render() {
+        this.setFormChangeHandlers();
+
+        // Set the steps for the form
+        this.steps = [
+            { name: 'Details', component: <InvoiceDetails formData={this.state.formData} formChanges={this.formChanges} /> },
+            { name: 'Items', component: <InvoiceItemList /> },
+        ];
+
         return (
             <Container className="add-invoice">
                 <Grid2 xs={12}>

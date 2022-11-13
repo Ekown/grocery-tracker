@@ -7,24 +7,12 @@ import config from "../../../../config/config";
 import CustomAutocomplete from '../../atoms/custom-autocomplete/custom-autocomplete';
 
 class InvoiceDetails extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            formData: props.formData,
-        };
-
-    }
-
-    componentDidUpdate(prevProps) {
-    }
-
     /**
      * Fetch all baggers from the API
      * 
      * @returns {Promise<Response>}
      */
-     fetchBaggers() {
+    fetchBaggers() {
         return fetch(`${config.API_URL}/api/baggers/list`)
             .then(res => res.json())
             .then(data => {
@@ -54,8 +42,23 @@ class InvoiceDetails extends React.Component {
      * 
      * @returns {Promise<Response>}
      */
-     fetchStores() {
+    fetchStores() {
         return fetch(`${config.API_URL}/api/stores/list`)
+            .then(res => res.json())
+            .then(data => {
+                if (data) {
+                    return data;
+                }
+            });
+    }
+
+    /**
+     * Fetch branches by store from the API
+     * 
+     * @returns {Promise<Response>}
+     */
+     fetchBranchByStore(storeId) {
+        return fetch(`${config.API_URL}/api/stores/${storeId}/branch`)
             .then(res => res.json())
             .then(data => {
                 if (data) {
@@ -72,35 +75,40 @@ class InvoiceDetails extends React.Component {
                         size="small"
                         label="Store"
                         name="store"
-                        value={this.state.formData.store}
+                        value={this.props.formData.store}
                         fetchOptions={() => this.fetchStores()}
                         onChange={(value) => {
-                            this.setState(prevState => {
-                                return {
-                                    ...prevState,
-                                    formData: {
-                                        ...prevState.formData,
-                                        store: value,
-                                    }
-                                };
-                            });
+                            this.props.formChanges.store(value);
+
+                            // If the selected store is cleared, clear the branch field too
+                            if (value === null) {
+                                this.props.formChanges.branch(null);
+                            }
                         }}
                     />
                 </Grid2>
+                {
+                    this.props.formData.store ?
+                        <Grid2>
+                            <CustomAutocomplete
+                                size="small"
+                                label="Branch"
+                                name="branch"
+                                value={this.props.formData.branch}
+                                fetchOptions={() => this.fetchBranchByStore(this.props.formData.store.id)}
+                                onChange={(value) => {
+                                    this.props.formChanges.branch(value);
+                                }}
+                                store={this.props.formData.store.id}
+                            />
+                        </Grid2> : null
+                }
                 <Grid2>
                     <DatePicker
                         label="Transaction Date"
-                        value={this.state.formData.transactionDate}
-                        onChange={(newValue) => {
-                            this.setState(prevState => {
-                                return {
-                                    ...prevState,
-                                    formData: {
-                                        ...prevState.formData,
-                                        transactionDate: newValue,
-                                    }
-                                }
-                            })
+                        value={this.props.formData.transactionDate}
+                        onChange={(value) => {
+                            this.props.formChanges.transactionDate(value);
                         }}
                         renderInput={(params) => <TextField fullWidth size="small" {...params} />}
                     />
@@ -110,18 +118,10 @@ class InvoiceDetails extends React.Component {
                         size="small"
                         label="Cashier"
                         name="cashier"
-                        value={this.state.formData.cashier}
+                        value={this.props.formData.cashier}
                         fetchOptions={() => this.fetchCashiers()}
                         onChange={(value) => {
-                            this.setState(prevState => {
-                                return {
-                                    ...prevState,
-                                    formData: {
-                                        ...prevState.formData,
-                                        cashier: value,
-                                    }
-                                };
-                            });
+                            this.props.formChanges.cashier(value);
                         }}
                     />
                 </Grid2>
@@ -130,18 +130,10 @@ class InvoiceDetails extends React.Component {
                         size="small"
                         label="Bagger"
                         name="bagger"
-                        value={this.state.formData.bagger}
+                        value={this.props.formData.bagger}
                         fetchOptions={() => this.fetchBaggers()}
                         onChange={(value) => {
-                            this.setState(prevState => {
-                                return {
-                                    ...prevState,
-                                    formData: {
-                                        ...prevState.formData,
-                                        bagger: value,
-                                    }
-                                };
-                            });
+                            this.props.formChanges.bagger(value);
                         }}
                     />
                 </Grid2>
