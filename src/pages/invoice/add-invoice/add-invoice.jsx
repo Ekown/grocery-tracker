@@ -14,6 +14,8 @@ class AddInvoice extends React.Component {
         this.state = {
             formData: {
                 transactionDate: dayjs(new Date()), //Initialize the transaction date to the current day
+                store: null,
+                branch: null,
                 cashier: null,
                 bagger: null,
             },

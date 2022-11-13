@@ -49,23 +49,38 @@ class InvoiceDetails extends React.Component {
             });
     }
 
+    /**
+     * Fetch all stores from the API
+     * 
+     * @returns {Promise<Response>}
+     */
+     fetchStores() {
+        return fetch(`${config.API_URL}/api/stores/list`)
+            .then(res => res.json())
+            .then(data => {
+                if (data) {
+                    return data;
+                }
+            });
+    }
+
     render() {
         return (
             <Stack xs={12} className="invoice-details">
                 <Grid2>
                     <CustomAutocomplete
                         size="small"
-                        label="Cashier"
-                        name="cashier"
-                        value={this.state.formData.cashier}
-                        fetchOptions={() => this.fetchCashiers()}
+                        label="Store"
+                        name="store"
+                        value={this.state.formData.store}
+                        fetchOptions={() => this.fetchStores()}
                         onChange={(value) => {
                             this.setState(prevState => {
                                 return {
                                     ...prevState,
                                     formData: {
                                         ...prevState.formData,
-                                        cashier: value,
+                                        store: value,
                                     }
                                 };
                             });
