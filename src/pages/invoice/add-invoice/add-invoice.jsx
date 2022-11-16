@@ -103,7 +103,7 @@ class AddInvoice extends React.Component {
                 <Grid2 container spacing={2}>
                     <Grid2 xs={12}>
                         <Card>
-                            <CardContent>
+                            <CardContent className="card-content">
                                 <StepZilla
                                     steps={this.steps}
                                     nextButtonText="NEXT"

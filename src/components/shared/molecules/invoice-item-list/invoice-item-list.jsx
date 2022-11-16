@@ -1,5 +1,6 @@
 import React from 'react';
 import ItemList from '../item-list/item-list';
+import './invoice-item-list.scss';
 
 class InvoiceItemList extends React.Component {
     constructor(props) {
@@ -15,7 +16,9 @@ class InvoiceItemList extends React.Component {
 
     render() {
         return (
-            <ItemList className="invoice-item-list" />
+            <div className="invoice-item-list">
+                <ItemList />
+            </div>
         );
     }
 }
