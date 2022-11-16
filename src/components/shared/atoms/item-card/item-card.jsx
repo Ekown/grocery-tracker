@@ -19,6 +19,7 @@ class ItemCard extends React.Component {
     render() {
         return (
             <ListItem
+                dense={true}
                 className="item-card"
                 alignItems="flex-start"
                 secondaryAction={
@@ -47,7 +48,7 @@ class ItemCard extends React.Component {
                             </Typography>
                         </React.Fragment>
                     }
-                    secondary={"500g"}
+                    secondary={this.props.size}
                 >
                 </ListItemText>
             </ListItem>
