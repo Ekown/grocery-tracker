@@ -37,10 +37,11 @@ class ItemCard extends React.Component {
                     ></Avatar>
                 </ListItemAvatar>
                 <ListItemText
+                    className="item-col"
                     primary={
                         <React.Fragment>
                             <Typography
-                                sx={{ display: 'inline' }}
+                                className="item-name"
                                 component="span"
                                 variant="body2"
                             >
@@ -49,6 +50,21 @@ class ItemCard extends React.Component {
                         </React.Fragment>
                     }
                     secondary={this.props.size}
+                >
+                </ListItemText>
+                <ListItemText
+                    className="quantity-col"
+                    primary={
+                        <React.Fragment>
+                            <Typography
+                                className="item-quantity"
+                                component="span"
+                                variant="body2"
+                            >
+                                x{this.props.quantity}
+                            </Typography>
+                        </React.Fragment>
+                    }
                 >
                 </ListItemText>
             </ListItem>
