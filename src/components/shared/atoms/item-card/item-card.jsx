@@ -19,7 +19,7 @@ class ItemCard extends React.Component {
                 className="item-card"
                 alignItems="flex-start"
                 secondaryAction={
-                    <NumberStepper value={this.props.quantity} />
+                    <NumberStepper handleQuantityChange={this.props.handleQuantityChange} value={this.props.quantity} />
                 }
             >
                 <ListItemAvatar>

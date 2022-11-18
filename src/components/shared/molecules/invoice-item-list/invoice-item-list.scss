@@ -2,6 +2,10 @@
     .item-list-container {
         max-height: 375px;
         overflow: auto;
+
+        .item-list {
+            background-color: #ffffff00;
+        }
     }
 
     .total {
