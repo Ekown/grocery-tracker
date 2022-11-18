@@ -19,15 +19,15 @@ class ItemCard extends React.Component {
                 className="item-card"
                 alignItems="flex-start"
                 secondaryAction={
-                    <NumberStepper handleQuantityChange={this.props.handleQuantityChange} value={this.props.quantity} />
+                    <NumberStepper handleQuantityChange={this.props.handleQuantityChange} value={this.props.item.quantity} />
                 }
             >
                 <ListItemAvatar>
                     <Avatar
                         variant="rounded"
-                        src={this.props.imageSrc}
+                        src={this.props.item.image}
                         sx={{ width: 56, height: 56 }}
-                        alt={this.props.name}
+                        alt={this.props.item.name}
                     ></Avatar>
                 </ListItemAvatar>
                 <ListItemText
@@ -39,15 +39,15 @@ class ItemCard extends React.Component {
                                 component="span"
                                 variant="body2"
                             >
-                                {this.props.name}
+                                {this.props.item.name}
                             </Typography>
                         </React.Fragment>
                     }
                     secondary={
-                        <div>
-                            {this.props.size}
-                            <div>₱{this.props.price.toFixed(2)}</div>
-                        </div>
+                        <React.Fragment>
+                            {this.props.item.size}
+                            <span className="item-price">₱{this.props.item.price.toFixed(2)}</span>
+                        </React.Fragment>
                     }
                 >
                 </ListItemText>

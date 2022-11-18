@@ -12,12 +12,19 @@ class NumberStepper extends React.Component {
         };
     }
 
+    /**
+     * Handles incrementing the value
+     */
     handleIncrement = () => {
-        this.setState(prevProps => { return { value: prevProps.value + 1 } });
+        this.setState(prevProps => { return { value: prevProps.value + 1 } }, () => this.props.handleQuantityChange(this.state.value));
+        
     }
 
+    /**
+     * Handles decrementing the value
+     */
     handleDecrement = () => {
-        this.setState(prevProps => { return { value: prevProps.value - 1 } });
+        this.setState(prevProps => { return { value: prevProps.value - 1 } }, () => this.props.handleQuantityChange(this.state.value));
     }
 
     render() {

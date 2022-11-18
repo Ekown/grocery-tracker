@@ -42,7 +42,7 @@ class InvoiceItemList extends React.Component {
                 },
                 {
                     image: "https://fishersupermarket.ph/wp-content/uploads/2020/10/4800575425033.jpg",
-                    id: '33',
+                    id: '331',
                     name: "Krem Top Creamer",
                     size: "500G",
                     quantity: 5,
@@ -126,15 +126,44 @@ class InvoiceItemList extends React.Component {
     //     });
     // }
 
-    onDetected = result => {
+    /**
+     * Set scan result
+     * 
+     * @param {String} result - The resulting scanned text
+     */
+    setScanResult = result => {
         this.setState(prevState => {
             return { result: result }
         });
     }
 
+    /**
+     * Toggles the camera state
+     */
     toggleCamera = () => {
         this.setState(prevState => {
             return { ...prevState, camera: !prevState.camera, result: null }
+        });
+    }
+
+    /**
+     * Update quantity for an item
+     * 
+     * @param {Number} updatedQuantity - Updated quantity value
+     * @param {Number} item - Item object
+     */
+    updateItemQuantity = (updatedQuantity, item) => {
+        this.setState(prevState => {
+            let updatedItems = prevState.items;
+            let foundIndex = prevState.items.findIndex(x => x.id === item.id);
+
+            // Update the corresponding item in the items array
+            updatedItems[foundIndex] = { ...prevState.items[foundIndex], quantity: updatedQuantity, cost: (updatedQuantity * item.price) };
+
+            return {
+                ...prevState,
+                items: updatedItems,
+            };
         });
     }
 
@@ -153,7 +182,7 @@ class InvoiceItemList extends React.Component {
                 {
                     this.state.camera ?
                         <div className="container">
-                            <QuaggaScanner onDetected={this.onDetected} />
+                            <QuaggaScanner onDetected={this.setScanResult} />
                         </div>
                         : null
                 } */}
@@ -164,13 +193,8 @@ class InvoiceItemList extends React.Component {
                                 this.state.items.map((item, index) => (
                                     <ItemCard
                                         key={index}
-                                        imageSrc={item.image}
-                                        name={item.name}
-                                        size={item.size}
-                                        quantity={item.quantity}
-                                        cost={item.cost}
-                                        price={item.price}
-                                        handleQuantityChange={this.handleQuantityChange}
+                                        item={item}
+                                        handleQuantityChange={e => this.updateItemQuantity(e, item)}
                                     />
                                 )) :
                                 (
@@ -193,7 +217,7 @@ class InvoiceItemList extends React.Component {
                         ₱{
                             this.state.items.reduce((a, b) => {
                                 return a + (b['cost'] ?? 0);
-                            }, 0)
+                            }, 0).toFixed(2)
                         }
                     </span>
                 </div>
