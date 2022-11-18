@@ -67,11 +67,24 @@ class InvoiceItemList extends React.Component {
                     price: 104,
                     cost: 2 * 104,
                 },
-            ]
+            ],
+            total: {
+                cost: 0,
+                quantity: 0,
+            },
         };
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidMount() {
+        this.setState(prevState => {
+            return {
+                ...prevState,
+                total: {
+                    cost: this.getTotalCost(),
+                    quantity: this.getTotalQuantity(),
+                },
+            };
+        });
     }
 
     // scan = () => {
@@ -163,8 +176,34 @@ class InvoiceItemList extends React.Component {
             return {
                 ...prevState,
                 items: updatedItems,
+                total: {
+                    cost: this.getTotalCost(),
+                    quantity: this.getTotalQuantity(),
+                },
             };
         });
+    }
+
+    /**
+     * Get the computed total cost of the items
+     * 
+     * @returns {Number} - Total cost of the items
+     */
+    getTotalCost() {
+        return this.state.items.reduce((a, b) => {
+            return a + (b['cost'] ?? 0);
+        }, 0);
+    }
+
+    /**
+     * Get the computed total quantity of the items
+     * 
+     * @returns {Number} - Total quantity of the items
+     */
+    getTotalQuantity() {
+        return this.state.items.reduce((a, b) => {
+            return a + (b['quantity'] ?? 0);
+        }, 0);
     }
 
     render() {
@@ -205,20 +244,10 @@ class InvoiceItemList extends React.Component {
                 </div>
                 <div className="total">
                     <span className="items">
-                        Total # of Items:
-                        {
-                            this.state.items.reduce((a, b) => {
-                                return a + (b['quantity'] ?? 0);
-                            }, 0)
-                        }
+                        Total # of Items: {this.state.total.quantity}
                     </span>
                     <span className="price">
-                        Total Price:
-                        ₱{
-                            this.state.items.reduce((a, b) => {
-                                return a + (b['cost'] ?? 0);
-                            }, 0).toFixed(2)
-                        }
+                        Total Cost: ₱{this.state.total.cost.toFixed(2)}
                     </span>
                 </div>
             </div>
