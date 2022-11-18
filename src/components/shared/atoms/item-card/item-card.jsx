@@ -1,8 +1,8 @@
 // React
-import { Avatar, IconButton, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Avatar, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
 import React from 'react';
 import './item-card.scss';
+import NumberStepper from '../number-stepper/number-stepper';
 
 class ItemCard extends React.Component {
     constructor(props) {
@@ -10,10 +10,6 @@ class ItemCard extends React.Component {
 
         this.state = {
         };
-
-    }
-
-    componentDidUpdate(prevProps) {
     }
 
     render() {
@@ -23,9 +19,7 @@ class ItemCard extends React.Component {
                 className="item-card"
                 alignItems="flex-start"
                 secondaryAction={
-                    <IconButton edge="end" aria-label="delete">
-                        <DeleteIcon />
-                    </IconButton>
+                    <NumberStepper value={this.props.quantity} />
                 }
             >
                 <ListItemAvatar>
@@ -49,21 +43,11 @@ class ItemCard extends React.Component {
                             </Typography>
                         </React.Fragment>
                     }
-                    secondary={this.props.size}
-                >
-                </ListItemText>
-                <ListItemText
-                    className="quantity-col"
-                    primary={
-                        <React.Fragment>
-                            <Typography
-                                className="item-quantity"
-                                component="span"
-                                variant="body2"
-                            >
-                                x{this.props.quantity}
-                            </Typography>
-                        </React.Fragment>
+                    secondary={
+                        <div>
+                            {this.props.size}
+                            <div>₱{this.props.price.toFixed(2)}</div>
+                        </div>
                     }
                 >
                 </ListItemText>

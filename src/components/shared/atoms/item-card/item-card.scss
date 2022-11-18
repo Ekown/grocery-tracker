@@ -1,12 +1,16 @@
 .item-card {
     padding-left: 5px !important;
-    padding-right: 45px !important;
+    padding-right: 65px !important;
 
     // This fixes the size and alignment for default fallback avatars
     .MuiAvatar-colorDefault {
         width: 40px;
         height: 40px;
         margin: 0 auto;
+    }
+
+    .MuiListItemSecondaryAction-root {
+        right: .5rem;
     }
 
     button[aria-label="delete"] {
@@ -28,8 +32,6 @@
         }
     }
 
-    
-
     .quantity-col {
         align-self: center;
 
@@ -37,5 +39,9 @@
             float: right;
             font-size: 0.70rem;
         }
+    }
+
+    .item-cost {
+        font-size: 0.70rem;
     }
 }
