@@ -1,5 +1,6 @@
 // import { Html5Qrcode } from 'html5-qrcode';
 import React from 'react';
+import QuaggaScanner from '../../atoms/quagga-scanner/quagga-scanner';
 import ItemList from '../item-list/item-list';
 import './invoice-item-list.scss';
 
@@ -8,15 +9,16 @@ class InvoiceItemList extends React.Component {
         super(props);
 
         this.state = {
-            data: "Not Found",
+            camera: false,
+            result: null,
         };
     }
 
     componentDidUpdate(prevProps) {
     }
 
-    // scan() {
-    //     const html5QrCode = new Html5Qrcode("reader");
+    // scan = () => {
+    //     this.html5QrCode = new Html5Qrcode("reader");
 
     //     // Square QR box with edge size = 70% of the smaller edge of the viewfinder.
     //     const qrboxFunction = function (viewfinderWidth, viewfinderHeight) {
@@ -32,12 +34,16 @@ class InvoiceItemList extends React.Component {
     //     const config = {
     //         fps: 10,
     //         qrbox: qrboxFunction,
-    //         // experimentalFeatures: {
-    //         //     useBarCodeDetectorIfSupported: true
-    //         // },
     //         rememberLastUsedCamera: true,
-    //         // showTorchButtonIfSupported: true,
-    //         useBarCodeDetectorIfSupported: true
+    //         showTorchButtonIfSupported: true,
+    //         useBarCodeDetectorIfSupported: true,
+    //         // formatsToSupport: [
+    //         //     Html5QrcodeSupportedFormats.EAN_13,
+    //         //     Html5QrcodeSupportedFormats.EAN_8,
+    //         //     Html5QrcodeSupportedFormats.UPC_A,
+    //         //     Html5QrcodeSupportedFormats.UPC_E,
+    //         //     Html5QrcodeSupportedFormats.UPC_EAN_EXTENSION,
+    //         // ],
     //     };
 
     //     const onNewScanResult = (decodedText, decodedResult) => {
@@ -46,24 +52,49 @@ class InvoiceItemList extends React.Component {
 
     //         alert(decodedText);
 
-    //         html5QrCode.stop().then((ignore) => {
-    //             // QR Code scanning is stopped.
-    //             console.log('ignore', ignore);
-    //         }).catch((err) => {
-    //             // Stop failed, handle it.
-    //         });
+    //         this.stopScan();
     //     }
 
     //     // Select back camera or fail with `OverconstrainedError`.
-    //     html5QrCode.start({ facingMode: { exact: "environment" } }, config, onNewScanResult);
+    //     this.html5QrCode.start({ facingMode: { exact: "environment" } }, config, onNewScanResult);
     // }
+
+    // stopScan = () => {
+    //     this.html5QrCode.stop().then((ignore) => {
+    //         this.html5QrCode.clear();
+    //         // QR Code scanning is stopped.
+    //         console.log('ignore', ignore);
+    //     }).catch((err) => {
+    //         // Stop failed, handle it.
+    //     });
+    // }
+
+    onDetected = result => {
+        this.setState(prevState => {
+            return { result: result }
+        });
+    }
+
+    toggleCamera = () => {
+        this.setState(prevState => {
+            return { ...prevState, camera: !prevState.camera, result: null }
+        });
+    }
 
     render() {
         return (
             <div className="invoice-item-list">
                 {/* We will hide these for now and use the DocScanner app for scanning barcodes until the scanner package is better
                 <button onClick={this.scan}>scan lol</button>
+                <button onClick={this.stopScan}>stop scan</button>
                 <div id="reader" width="600px"></div> */}
+                <p>{this.state.result ? this.state.result : "Scanning..."}</p>
+                <button onClick={this.toggleCamera}>
+                    {this.state.camera ? "Stop" : "Start"}
+                </button>
+                <div className="container">
+                    {this.state.camera && <QuaggaScanner onDetected={this.onDetected} />}
+                </div>
                 <ItemList />
             </div>
         );
