@@ -1,4 +1,13 @@
 .invoice-item-list {
-    max-height: 400px;
-    overflow: auto;
+    .item-list-container {
+        max-height: 375px;
+        overflow: auto;
+    }
+
+    .total {
+        font-size: 0.75rem;
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: .5rem;
+    }
 }
