@@ -3,7 +3,7 @@
         "type": "LiveStream",
         "constraints": {
             "width": {
-                "min": 450
+                "min": 300
             },
             "height": {
                 "min": 300

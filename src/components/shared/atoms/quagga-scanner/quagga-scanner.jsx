@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import config from "./config.json";
 import Quagga from "quagga";
+import './quagga-scanner.scss';
 
 const QuaggaScanner = props => {
     const { onDetected } = props;
@@ -56,6 +57,13 @@ const QuaggaScanner = props => {
                         { color: "red", lineWidth: 3 }
                     );
                 }
+            } else {
+                drawingCtx.clearRect(
+                    0,
+                    0,
+                    Number(drawingCanvas.getAttribute("width")),
+                    Number(drawingCanvas.getAttribute("height"))
+                );
             }
         });
 
