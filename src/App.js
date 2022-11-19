@@ -5,7 +5,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 import {
   BrowserRouter as Router,
   Route,
-  Routes
+  Routes,
+  Navigate
 } from 'react-router-dom';
 import Home from "./pages/home/home";
 import NotFoundPage from "./pages/404/404";
@@ -47,6 +48,7 @@ function App() {
             <Router>
               <Routes>
                 <Route path="/grocery-tracker">
+                  <Route path="" element={<Navigate to="home"/>} />
                   <Route path="home" element={<Home />} />
                   <Route path="invoice">
                     <Route path="add" element={<AddInvoice />} />
