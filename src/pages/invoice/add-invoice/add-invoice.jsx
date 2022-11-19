@@ -5,9 +5,10 @@ import { Card, CardContent, Container, Fab, Zoom } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import dayjs from 'dayjs';
 import StepZilla from "react-stepzilla";
-import InvoiceDetails from '../../../components/shared/molecules/invoice-details/invoice-details';
-import InvoiceItemList from '../../../components/shared/molecules/invoice-item-list/invoice-item-list';
+import InvoiceDetails from '../../../components/shared/organisms/invoice/invoice-details/invoice-details';
 import { withStyles } from '@mui/styles';
+import InvoiceItemList from '../../../components/shared/organisms/invoice/invoice-item-list/invoice-item-list';
+import AddItemModal from '../../../components/shared/molecules/modals/invoice/add-item/add-item-modal';
 
 class AddInvoice extends React.Component {
     constructor() {
@@ -22,6 +23,7 @@ class AddInvoice extends React.Component {
                 bagger: null,
             },
             currentStep: 0,
+            open: false,
         };
     }
 
@@ -128,6 +130,7 @@ class AddInvoice extends React.Component {
                         </Card>
                     </Grid2>
                 </Grid2>
+
                 <Zoom
                     key="primary"
                     in={this.state.currentStep === 1}
@@ -137,14 +140,34 @@ class AddInvoice extends React.Component {
                     }}
                     unmountOnExit
                 >
-                    <Fab sx={{
-                        position: 'absolute',
-                        bottom: 16,
-                        right: 16,
-                    }} aria-label="Add" color="primary">
+                    <Fab
+                        sx={
+                            {
+                                position: 'absolute',
+                                bottom: 16,
+                                right: 16,
+                            }
+                        }
+                        aria-label="Add"
+                        color="primary"
+                        onClick={() => {
+                            this.setState({
+                                open: true,
+                            });
+                        }}
+                    >
                         <AddIcon />
                     </Fab>
                 </Zoom>
+                
+                <AddItemModal
+                    open={this.state.open}
+                    closeModal={() => {
+                        this.setState({
+                            open: false,
+                        });
+                    }}
+                />
             </Container>
         );
     }

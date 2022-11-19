@@ -2,7 +2,7 @@
 import { Avatar, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
 import React from 'react';
 import './item-card.scss';
-import NumberStepper from '../number-stepper/number-stepper';
+import NumberStepper from '../../atoms/number-stepper/number-stepper';
 
 class ItemCard extends React.Component {
     constructor(props) {

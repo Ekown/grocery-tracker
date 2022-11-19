@@ -3,8 +3,8 @@ import { Stack, TextField } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import { DatePicker } from '@mui/x-date-pickers';
 import React from 'react';
-import config from "../../../../config/config";
-import CustomAutocomplete from '../../atoms/custom-autocomplete/custom-autocomplete';
+import config from "../../../../../config/config";
+import CustomAutocomplete from '../../../atoms/custom-autocomplete/custom-autocomplete';
 
 class InvoiceDetails extends React.Component {
     /**
