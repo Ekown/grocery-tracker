@@ -15,9 +15,21 @@ import { Container } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import './styles/react-stepzilla.scss';
+import { ThemeProvider } from "@mui/styles";
+import { createTheme } from "@mui/system";
 
 function App() {
   const [loading, setLoading] = useState(false);
+
+  // Custom theme
+  const theme = createTheme({
+    transitions: {
+      duration: {
+        enteringScreen: 225,
+        leavingScreen: 195,
+      }
+    }
+  });
 
   useEffect(() => {
     setLoading(true);
@@ -43,23 +55,24 @@ function App() {
           />
         </div>
         :
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <Container fixed className="App" sx={{ bgcolor: '#efefef' }}>
-            <Router>
-              <Routes>
-                <Route path="/grocery-tracker">
-                  <Route path="" element={<Navigate to="home"/>} />
-                  <Route path="home" element={<Home />} />
-                  <Route path="invoice">
-                    <Route path="add" element={<AddInvoice />} />
+        <ThemeProvider theme={theme}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <Container fixed className="App" sx={{ bgcolor: '#efefef' }}>
+              <Router>
+                <Routes>
+                  <Route path="/grocery-tracker">
+                    <Route path="" element={<Navigate to="home" />} />
+                    <Route path="home" element={<Home />} />
+                    <Route path="invoice">
+                      <Route path="add" element={<AddInvoice />} />
+                    </Route>
+                    <Route path="*" element={<NotFoundPage />} />
                   </Route>
-                  <Route path="*" element={<NotFoundPage />} />
-                </Route>
-              </Routes>
-            </Router>
-          </Container>
-        </LocalizationProvider>
-
+                </Routes>
+              </Router>
+            </Container>
+          </LocalizationProvider>
+        </ThemeProvider>
       }
     </div>
   );
