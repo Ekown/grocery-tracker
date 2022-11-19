@@ -1,11 +1,13 @@
 import React from 'react';
 import './add-invoice.scss';
 import Grid2 from '@mui/material/Unstable_Grid2';
-import { Card, CardContent, Container } from '@mui/material';
+import { Card, CardContent, Container, Fab, Zoom } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import dayjs from 'dayjs';
 import StepZilla from "react-stepzilla";
 import InvoiceDetails from '../../../components/shared/molecules/invoice-details/invoice-details';
 import InvoiceItemList from '../../../components/shared/molecules/invoice-item-list/invoice-item-list';
+import { withStyles } from '@mui/styles';
 
 class AddInvoice extends React.Component {
     constructor() {
@@ -19,6 +21,7 @@ class AddInvoice extends React.Component {
                 cashier: null,
                 bagger: null,
             },
+            currentStep: 0,
         };
     }
 
@@ -94,6 +97,11 @@ class AddInvoice extends React.Component {
             { name: 'Items', component: <InvoiceItemList /> },
         ];
 
+        const transitionDuration = {
+            enter: this.props.theme.transitions.duration.enteringScreen,
+            exit: this.props.theme.transitions.duration.leavingScreen,
+        };
+
         return (
             <Container className="add-invoice">
                 <Grid2 xs={12}>
@@ -110,14 +118,36 @@ class AddInvoice extends React.Component {
                                     backButtonText="PREVIOUS"
                                     backButtonCls="btn primary"
                                     nextButtonCls="btn primary"
+                                    onStepChange={(step) => {
+                                        this.setState({
+                                            currentStep: step,
+                                        });
+                                    }}
                                 />
                             </CardContent>
                         </Card>
                     </Grid2>
                 </Grid2>
+                <Zoom
+                    key="primary"
+                    in={this.state.currentStep === 1}
+                    timeout={transitionDuration}
+                    style={{
+                        transitionDelay: `${this.state.currentStep === 1 ? transitionDuration.exit : 0}ms`,
+                    }}
+                    unmountOnExit
+                >
+                    <Fab sx={{
+                        position: 'absolute',
+                        bottom: 16,
+                        right: 16,
+                    }} aria-label="Add" color="primary">
+                        <AddIcon />
+                    </Fab>
+                </Zoom>
             </Container>
         );
     }
 }
 
-export default AddInvoice;
+export default withStyles({}, { withTheme: true })(AddInvoice);
