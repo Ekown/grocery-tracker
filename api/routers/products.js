@@ -25,7 +25,7 @@ router.get('/sku/:sku', async (req, res) => {
             // Return an empty array if the store is not found
             if (item === null) {
                 console.log(`Product with SKU of ${req.params.sku} not found`);
-                return null;
+                return {};
             } else {
                 // Return all the branches of the store
                 return item.getProduct();

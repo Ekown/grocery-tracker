@@ -16,6 +16,7 @@ const db = require('./models');
 const cashiers = require('./routers/cashiers');
 const baggers = require('./routers/baggers');
 const stores = require('./routers/stores');
+const products = require('./routers/products');
 
 // Try to connect to the CockroachDB instance
 (async () => {
@@ -52,6 +53,9 @@ app.use('/api/baggers', baggers);
 
 // Use stores router
 app.use('/api/stores', stores);
+
+// Use products router
+app.use('/api/products', products);
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
