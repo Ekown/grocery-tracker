@@ -1,6 +1,7 @@
-import { InputAdornment, TextField, Typography } from '@mui/material';
+import { Button, InputAdornment, TextField, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import React from 'react';
+import config from "../../../../../../config/config";
 import QuaggaScanner from '../../../../atoms/quagga-scanner/quagga-scanner';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import CustomModal from '../../../../custom-modal/custom-modal';
@@ -12,9 +13,27 @@ class AddItemModal extends React.Component {
 
         this.state = {
             serial_number: null,
+            product: null,
         };
     }
-    
+
+    /**
+     * Search for the product
+     * 
+     * @param {Event} e 
+     */
+    searchProduct = e => {
+        fetch(`${config.API_URL}/api/products/sku/${this.state.serial_number}`)
+            .then(res => res.json())
+            .then(product => {
+                if (product && product !== {}) {
+                    this.setState({ product: product });
+                } else {
+                    this.setState({ product: null });
+                }
+            });
+    }
+
     render() {
         return (
             <CustomModal className="add-item-modal" {...this.props}>
@@ -28,16 +47,34 @@ class AddItemModal extends React.Component {
                             size="small"
                             label="Serial Number"
                             margin="normal"
+                            onChange={(event) => {
+                                this.setState({
+                                    serial_number: event.target.value
+                                });
+                            }}
                             value={this.state.serial_number ?? ''}
                             InputProps={{
                                 endAdornment: <InputAdornment position="end"><QuaggaScanner onDetected={(code) => {
                                     this.setState({
                                         serial_number: code,
                                     });
-                                } } /></InputAdornment>,
+                                }} /></InputAdornment>,
                             }}
                         />
+                        <center><Button variant="contained" onClick={this.searchProduct}>Search Product</Button></center>
                     </Grid2>
+
+                    {
+                        this.state.serial_number && this.state.product ?
+                            <Grid2>
+                                {
+                                    this.state.product?.id ?
+                                        <div>
+                                            <div>{this.state.product.name}</div>
+                                        </div> : <div>No product found</div>
+                                }
+                            </Grid2> : null
+                    }
                 </Stack>
             </CustomModal>
         );
