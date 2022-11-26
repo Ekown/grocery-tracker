@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('../models');
 const router = express.Router()
+const Bagger = db['Bagger'];
 
 // middleware that is specific to this router
 // router.use((req, res, next) => {
@@ -18,7 +19,7 @@ const router = express.Router()
 router.get('/list', async (req, res) => {
     try {
         const result = await db.sequelize.transaction(async (t) => {
-            const baggers = await db['Bagger'].findAll({
+            const baggers = await Bagger.findAll({
                 order: [['name', 'ASC']],
             });
 

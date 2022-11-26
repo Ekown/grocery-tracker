@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('../models');
 const router = express.Router()
+const Store = db['Store'];
 
 // middleware that is specific to this router
 // router.use((req, res, next) => {
@@ -18,7 +19,7 @@ const router = express.Router()
 router.get('/list', async (req, res) => {
     try {
         const result = await db.sequelize.transaction(async (t) => {
-            const stores = await db['Store'].findAll({
+            const stores = await Store.findAll({
                 order: [['name', 'ASC']],
             });
 
@@ -37,7 +38,7 @@ router.get('/list', async (req, res) => {
 router.get('/:storeId/branch', async (req, res) => {
     try {
         const result = await db.sequelize.transaction(async (t) => {
-            const store = await db['Store'].findByPk(req.params.storeId);
+            const store = await Store.findByPk(req.params.storeId);
 
             // Return an empty array if the store is not found
             if (store === null) {
