@@ -25,7 +25,6 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
     },
     name: DataTypes.STRING,
-    store_name: DataTypes.STRING,
     date_entered: DataTypes.DATE,
     date_modified: DataTypes.DATE,
     date_deleted: DataTypes.DATE
