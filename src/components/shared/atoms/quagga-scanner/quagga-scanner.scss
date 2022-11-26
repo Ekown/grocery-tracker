@@ -1,17 +1,30 @@
-.container {
+.quagga-scanner {
+    .scan-button {
+        padding: 0;
+        width: 1rem;
+        min-width: 1rem;
+
+        &__icon {
+            rotate: 90deg;
+        }
+    }
+}
+
+#interactive {
     position: relative;
 }
 
-.container,
+#interactive,
 #interactive.viewport {
-    width: 300px;
-    height: 300px;
+    position: relative;
+    width: 100% !important;
+    height: 35vh !important;
 }
 
 #interactive.viewport canvas,
 video {
-    width: 300px;
-    height: 300px;
+    width: inherit;
+    height: inherit;
     position: absolute;
     top: 0;
     left: 0;
@@ -19,6 +32,6 @@ video {
 
 #interactive.viewport canvas.drawingBuffer,
 video.drawingBuffer {
-    width: 300px;
-    height: 300px;
+    width: inherit;
+    height: inherit;
 }
