@@ -104,6 +104,7 @@ const QuaggaScanner = props => {
             <CustomModal
                 open={showScanner}
                 closeModal={() => {
+                    Quagga.stop();
                     setShowScanner(false);
                 }}
             ><div id="interactive" className="viewport" />
