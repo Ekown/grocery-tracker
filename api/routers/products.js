@@ -2,7 +2,6 @@ const express = require('express');
 const db = require('../models');
 const router = express.Router();
 const Item = db['Item'];
-const Product = db['Product'];
 
 // middleware that is specific to this router
 // router.use((req, res, next) => {
@@ -22,12 +21,12 @@ router.get('/sku/:sku', async (req, res) => {
         const result = await db.sequelize.transaction(async (t) => {
             const item = await Item.findOne({ where: { sku: req.params.sku } });
 
-            // Return an empty array if the store is not found
+            // Return an empty object if the item is not found
             if (item === null) {
                 console.log(`Product with SKU of ${req.params.sku} not found`);
                 return {};
             } else {
-                // Return all the branches of the store
+                // Return the Item's product
                 return item.getProduct();
             }
         });

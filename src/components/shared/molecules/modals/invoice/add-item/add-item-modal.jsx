@@ -20,7 +20,7 @@ class AddItemModal extends React.Component {
     /**
      * Search for the product
      * 
-     * @param {Event} e 
+     * @param {Event} e - Event object
      */
     searchProduct = e => {
         fetch(`${config.API_URL}/api/products/sku/${this.state.serial_number}`)

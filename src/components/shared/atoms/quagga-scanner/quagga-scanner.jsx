@@ -15,6 +15,7 @@ const QuaggaScanner = props => {
             return;
         }
 
+        // We need to wrap this in a SetTimeout to delay the scanner initialization before the scanner modal appears
         setTimeout(() => {
             Quagga.init(config, err => {
                 if (err) {
@@ -82,11 +83,21 @@ const QuaggaScanner = props => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showScanner]);
 
+    /**
+     * Trigger the onDetected props with scanned code result
+     * 
+     * @param {Object} result scan results
+     */
     const detected = result => {
         setShowScanner(false);
         onDetected(result.codeResult.code);
     };
 
+    /**
+     * Handle the scanner button click to toggle the show scanner state
+     * 
+     * @param {Event} e Event object
+     */
     const handleScannerClick = (e) => {
         setShowScanner(!showScanner);
     }
