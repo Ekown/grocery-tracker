@@ -1,6 +1,6 @@
 const express = require('express');
 const db = require('../models');
-const router = express.Router()
+const router = express.Router();
 const Bagger = db['Bagger'];
 
 // middleware that is specific to this router

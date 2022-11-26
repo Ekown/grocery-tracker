@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Category',
     underscored: true,
+    timestamps: true,
     paranoid: true,
     createdAt: 'date_entered',
     updatedAt: 'date_modified',
