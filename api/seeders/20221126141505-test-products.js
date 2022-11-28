@@ -43,22 +43,27 @@ const testData = {
     {
       sku: 4807788410016,
       size: '30s',
+      image_url: '8cee1e1e-51b9-4e94-bb92-903807903149',
     },
     {
       sku: 4902430441896,
       size: '1s',
+      image_url: '4bdff8fc-6f6f-408d-a828-a5dfef572c0c',
     },
     {
       sku: 8851932349130,
       size: '50mL',
+      image_url: '2bdb2a24-bfd8-49f4-9f9f-c7e5477c5f20',
     },
     {
       sku: 6952286100711,
       size: '150+20s',
+      image_url: 'a64d76ae-ea6f-43c9-8668-c2b431d4a410',
     },
     {
       sku: 4809012857680,
       size: '100mL',
+      image_url: '1a9b95af-93e4-43f5-9e73-619c2a457c07',
     },
   ],
 };
