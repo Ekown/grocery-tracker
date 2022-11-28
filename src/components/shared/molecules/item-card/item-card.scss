@@ -1,6 +1,10 @@
 .item-card {
     padding-left: 5px !important;
-    padding-right: 65px !important;
+    padding-right: 5px !important;
+
+    &:not(.no-quantity) {
+        padding-right: 65px !important;
+    }
 
     // This fixes the size and alignment for default fallback avatars
     .MuiAvatar-colorDefault {

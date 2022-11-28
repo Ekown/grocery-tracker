@@ -19,27 +19,35 @@ class ItemCard extends React.Component {
         return (
             <ListItem
                 dense={true}
-                className="item-card"
+                className={"item-card " + (!this.props.handleQuantityChange ? 'no-quantity' : '')}
                 alignItems="flex-start"
                 secondaryAction={
                     this.props.handleQuantityChange ?
-                        <NumberStepper handleQuantityChange={this.props.handleQuantityChange} value={this.props.item.quantity} /> : null
+                        <NumberStepper handleQuantityChange={this.props.handleQuantityChange} value={this.props.item.quantity} /> : false
                 }
             >
                 <ListItemAvatar>
-                    <CloudinaryContext cloudName="dbakjb75c">
-                        <Avatar
-                            variant="rounded"
-                            sx={{ width: 56, height: 56 }}
-                            alt={this.props.item.name}
-                            component={
-                                () => {
-                                    return (<Image publicId={this.props.item.image ? `v1669646434/items/${this.props.item.image}` : this.defaultItemImageFallback} width="50" />);
-                                }
-                            }
-                        ></Avatar>
-                    </CloudinaryContext>
-
+                    {
+                        this.props.handleQuantityChange ?
+                            <Avatar
+                                varant="rounded"
+                                src={this.props.item.image}
+                                sx={{ width: 56, height: 56 }}
+                                alt={this.props.item.name}
+                            ></Avatar> :
+                            <CloudinaryContext cloudName="dbakjb75c">
+                                <Avatar
+                                    variant="rounded"
+                                    sx={{ width: 56, height: 56 }}
+                                    alt={this.props.item.name}
+                                    component={
+                                        () => {
+                                            return (<Image publicId={this.props.item.image ? `v1669646434/items/${this.props.item.image}` : this.defaultItemImageFallback} width="50" />);
+                                        }
+                                    }
+                                ></Avatar>
+                            </CloudinaryContext>
+                    }
                 </ListItemAvatar>
                 <ListItemText
                     className="item-col"
