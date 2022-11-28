@@ -6,6 +6,7 @@ import QuaggaScanner from '../../../../atoms/quagga-scanner/quagga-scanner';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import CustomModal from '../../../../custom-modal/custom-modal';
 import './add-item-modal.scss';
+import ItemCard from '../../../item-card/item-card';
 
 class AddItemModal extends React.Component {
     constructor(props) {
@@ -70,7 +71,17 @@ class AddItemModal extends React.Component {
                                 {
                                     this.state.product?.id ?
                                         <div>
-                                            <div>{this.state.product.name}</div>
+                                            <ItemCard
+                                                item={{
+                                                    image: this.state.product.image_url,
+                                                    id: this.state.product.id,
+                                                    name: this.state.product.Product.name,
+                                                    size: this.state.product.size,
+                                                    quantity: 1,
+                                                    // price: 70.75,
+                                                    // cost: 70.75,
+                                                }}
+                                            />
                                         </div> : <div>No product found</div>
                                 }
                             </Grid2> : null

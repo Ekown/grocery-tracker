@@ -3,6 +3,7 @@ import { Avatar, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui
 import React from 'react';
 import './item-card.scss';
 import NumberStepper from '../../atoms/number-stepper/number-stepper';
+import { CloudinaryContext, Image } from 'cloudinary-react';
 
 class ItemCard extends React.Component {
     constructor(props) {
@@ -10,6 +11,8 @@ class ItemCard extends React.Component {
 
         this.state = {
         };
+
+        this.defaultItemImageFallback = 'v1669646434/items/8cee1e1e-51b9-4e94-bb92-903807903149';
     }
 
     render() {
@@ -19,16 +22,24 @@ class ItemCard extends React.Component {
                 className="item-card"
                 alignItems="flex-start"
                 secondaryAction={
-                    <NumberStepper handleQuantityChange={this.props.handleQuantityChange} value={this.props.item.quantity} />
+                    this.props.handleQuantityChange ?
+                        <NumberStepper handleQuantityChange={this.props.handleQuantityChange} value={this.props.item.quantity} /> : null
                 }
             >
                 <ListItemAvatar>
-                    <Avatar
-                        variant="rounded"
-                        src={this.props.item.image}
-                        sx={{ width: 56, height: 56 }}
-                        alt={this.props.item.name}
-                    ></Avatar>
+                    <CloudinaryContext cloudName="dbakjb75c">
+                        <Avatar
+                            variant="rounded"
+                            sx={{ width: 56, height: 56 }}
+                            alt={this.props.item.name}
+                            component={
+                                () => {
+                                    return (<Image publicId={this.props.item.image ? `v1669646434/items/${this.props.item.image}` : this.defaultItemImageFallback} width="50" />);
+                                }
+                            }
+                        ></Avatar>
+                    </CloudinaryContext>
+
                 </ListItemAvatar>
                 <ListItemText
                     className="item-col"
@@ -46,7 +57,10 @@ class ItemCard extends React.Component {
                     secondary={
                         <React.Fragment>
                             {this.props.item.size}
-                            <span className="item-price">₱{this.props.item.price.toFixed(2)}</span>
+                            {
+                                this.props.item.price ?
+                                    <span className="item-price">₱{this.props.item.price.toFixed(2)}</span> : null
+                            }
                         </React.Fragment>
                     }
                 >
