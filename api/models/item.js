@@ -25,7 +25,8 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
     },
     sku: DataTypes.BIGINT,
-    size: DataTypes.STRING
+    size: DataTypes.STRING,
+    image_url: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Item',
