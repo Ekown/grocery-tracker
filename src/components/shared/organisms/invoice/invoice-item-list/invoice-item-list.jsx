@@ -4,6 +4,7 @@ import React from 'react';
 import { List } from '@mui/material';
 import './invoice-item-list.scss';
 import ItemCard from '../../../molecules/item-card/item-card';
+import AddItemModal from '../../../molecules/modals/invoice/add-item/add-item-modal';
 
 class InvoiceItemList extends React.Component {
     constructor(props) {
@@ -14,7 +15,7 @@ class InvoiceItemList extends React.Component {
             result: null,
             items: [
                 {
-                    image: "https://pgmobile.puregold.com.ph/images/4800166142325.jpg",
+                    image: "test",
                     id: '11',
                     name: "Stik-O Jr. Choco",
                     size: "380G",
@@ -23,7 +24,7 @@ class InvoiceItemList extends React.Component {
                     cost: 70.75,
                 },
                 {
-                    image: "https://fishersupermarket.ph/wp-content/uploads/2020/10/4800024575258.jpg",
+                    image: "test",
                     id: '22',
                     name: "Del Monte Four Seasons",
                     size: "1L",
@@ -32,7 +33,7 @@ class InvoiceItemList extends React.Component {
                     cost: 2 * 87.30,
                 },
                 {
-                    image: "http://cdn.shopify.com/s/files/1/0476/0266/3573/products/del-monte-juice-del-monte-juice-drink-pineapple-strawberry-tetra-1l-16892496314500_1024x.jpg?v=1619599627",
+                    image: "test",
                     id: '33',
                     name: "Del Monte Pineapple Strawberry",
                     size: "1L",
@@ -41,7 +42,7 @@ class InvoiceItemList extends React.Component {
                     cost: 1 * 84.30,
                 },
                 {
-                    image: "https://fishersupermarket.ph/wp-content/uploads/2020/10/4800575425033.jpg",
+                    image: "test",
                     id: '331',
                     name: "Krem Top Creamer",
                     size: "500G",
@@ -50,7 +51,7 @@ class InvoiceItemList extends React.Component {
                     cost: 5 * 69.10,
                 },
                 {
-                    image: "https://cdn.shopify.com/s/files/1/0485/8380/3036/products/4808887040012-530x530.jpg?v=1631673449",
+                    image: "test",
                     id: '44',
                     name: "Purefoods Liver Spread",
                     size: "85G",
@@ -59,7 +60,7 @@ class InvoiceItemList extends React.Component {
                     cost: 2 * 28.50,
                 },
                 {
-                    image: "https://d2t3trus7wwxyy.cloudfront.net/catalog/product/1/0/10256579-quaker-fio-chocolate-500g_1.png",
+                    image: "test",
                     id: '55',
                     name: "Quaker Instant Oats Chocolate",
                     size: "500G",
@@ -138,6 +139,31 @@ class InvoiceItemList extends React.Component {
     //         // Stop failed, handle it.
     //     });
     // }
+
+    /**
+     * Adds the product to the list 
+     * 
+     * @param {Object} product The added product object from the Add Product modal
+     */
+    addProduct(product) {
+        this.setState(prevState => {
+            return {
+                ...prevState,
+                items: [
+                    ...prevState.items,
+                    {
+                        image: product.image_url,
+                        id: product.id,
+                        name: product.Product.name,
+                        size: product.size,
+                        quantity: 1,
+                        // price: 70.75,
+                        // cost: 70.75,
+                    },
+                ]
+            };
+        })
+    }
 
     /**
      * Set scan result
@@ -250,6 +276,17 @@ class InvoiceItemList extends React.Component {
                         Total Cost: ₱{this.state.total.cost.toFixed(2)}
                     </span>
                 </div>
+
+                <AddItemModal
+                    open={this.props.open}
+                    closeModal={() => {
+                        this.props.handleModalClose();
+                    }}
+                    handleAddProduct={e => {
+                        this.props.handleModalClose();
+                        this.addProduct(e);
+                    }}
+                />
             </div>
         );
     }

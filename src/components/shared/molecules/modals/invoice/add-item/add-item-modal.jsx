@@ -82,6 +82,13 @@ class AddItemModal extends React.Component {
                                                     // cost: 70.75,
                                                 }}
                                             />
+                                            <center>
+                                                <Button
+                                                    variant="contained"
+                                                    onClick={e => {
+                                                        this.props.handleAddProduct(this.state.product)
+                                                    }}>Add Product</Button>
+                                            </center>
                                         </div> : <div>No product found</div>
                                 }
                             </Grid2> : null

@@ -8,7 +8,6 @@ import StepZilla from "react-stepzilla";
 import InvoiceDetails from '../../../components/shared/organisms/invoice/invoice-details/invoice-details';
 import { withStyles } from '@mui/styles';
 import InvoiceItemList from '../../../components/shared/organisms/invoice/invoice-item-list/invoice-item-list';
-import AddItemModal from '../../../components/shared/molecules/modals/invoice/add-item/add-item-modal';
 
 class AddInvoice extends React.Component {
     constructor() {
@@ -96,7 +95,15 @@ class AddInvoice extends React.Component {
         // Set the steps for the form
         this.steps = [
             { name: 'Details', component: <InvoiceDetails formData={this.state.formData} formChanges={this.formChanges} /> },
-            { name: 'Items', component: <InvoiceItemList /> },
+            {
+                name: 'Items', component: <InvoiceItemList open={this.state.open}
+                    handleModalClose={() => {
+                        this.setState({
+                            open: false,
+                        });
+                    }}
+                />
+            },
         ];
 
         const transitionDuration = {
@@ -159,15 +166,6 @@ class AddInvoice extends React.Component {
                         <AddIcon />
                     </Fab>
                 </Zoom>
-                
-                <AddItemModal
-                    open={this.state.open}
-                    closeModal={() => {
-                        this.setState({
-                            open: false,
-                        });
-                    }}
-                />
             </Container>
         );
     }

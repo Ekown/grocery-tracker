@@ -27,27 +27,18 @@ class ItemCard extends React.Component {
                 }
             >
                 <ListItemAvatar>
-                    {
-                        this.props.handleQuantityChange ?
-                            <Avatar
-                                varant="rounded"
-                                src={this.props.item.image}
-                                sx={{ width: 56, height: 56 }}
-                                alt={this.props.item.name}
-                            ></Avatar> :
-                            <CloudinaryContext cloudName="dbakjb75c">
-                                <Avatar
-                                    variant="rounded"
-                                    sx={{ width: 56, height: 56 }}
-                                    alt={this.props.item.name}
-                                    component={
-                                        () => {
-                                            return (<Image publicId={this.props.item.image ? `v1669646434/items/${this.props.item.image}` : this.defaultItemImageFallback} width="50" />);
-                                        }
-                                    }
-                                ></Avatar>
-                            </CloudinaryContext>
-                    }
+                    <CloudinaryContext cloudName="dbakjb75c">
+                        <Avatar
+                            variant="rounded"
+                            sx={{ width: 56, height: 56 }}
+                            alt={this.props.item.name}
+                            component={
+                                () => {
+                                    return (<Image publicId={this.props.item.image ? `v1669646434/items/${this.props.item.image}` : this.defaultItemImageFallback} width="50" />);
+                                }
+                            }
+                        ></Avatar>
+                    </CloudinaryContext>
                 </ListItemAvatar>
                 <ListItemText
                     className="item-col"
