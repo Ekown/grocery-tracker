@@ -3,6 +3,7 @@ const db = require('../models');
 const router = express.Router();
 const Item = db['Item'];
 const Product = db['Product'];
+const Price = db['Price'];
 
 // middleware that is specific to this router
 // router.use((req, res, next) => {
@@ -20,7 +21,21 @@ const Product = db['Product'];
 router.get('/sku/:sku', async (req, res) => {
     try {
         const result = await db.sequelize.transaction(async (t) => {
-            const item = await Item.findOne({ where: { sku: req.params.sku }, include: Product });
+            // Get the item with its product and latest price
+            const item = await Item.findOne({
+                where: { sku: req.params.sku },
+                include: [
+                    Product,
+                    {
+                        model: Price,
+                        separate: true,
+                        limit: 1,
+                        order: [
+                            ['date_entered', 'DESC']
+                        ],
+                    }
+                ]
+            });
 
             // Return an empty object if the item is not found
             if (item === null) {

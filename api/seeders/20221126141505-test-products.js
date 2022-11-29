@@ -81,8 +81,26 @@ let arItems = generateMockSeedArrays(5, null, i => {
   }
 });
 
+testData.prices = [
+  {
+    unit_price: 99.75,
+    item_id: arItems[2].id,
+  },
+  {
+    unit_price: 42,
+    item_id: arItems[3].id,
+  },
+  {
+    unit_price: 44,
+    item_id: arItems[3].id,
+  },
+];
+
+let arPrices = generateMockSeedArrays(3, null);
+
 arProducts = arProducts.map((x, i) => { return { ...x, ...testData.products[i] } });
 arItems = arItems.map((x, i) => { return { ...x, ...testData.items[i] } });
+arPrices = arPrices.map((x, i) => { return { ...x, ...testData.prices[i] } });
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -100,6 +118,10 @@ module.exports = {
         queryInterface.bulkInsert('items', [
           ...arItems,
         ], { transaction: t }),
+
+        queryInterface.bulkInsert('prices', [
+          ...arPrices,
+        ], { transaction: t }),
       ]);
     });
   },
@@ -107,6 +129,7 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     return queryInterface.sequelize.transaction(t => {
       return Promise.all([
+        queryInterface.bulkDelete('prices', { [Op.or]: [...arPrices.map(a => { return { id: a.id } })] }, { transaction: t }),
         queryInterface.bulkDelete('items', { [Op.or]: [...arItems.map(a => { return { sku: a.sku } })] }, { transaction: t }),
         queryInterface.bulkDelete('products', { [Op.or]: [...arProducts.map(a => { return { name: a.name } })] }, { transaction: t }),
         queryInterface.bulkDelete('categories', { [Op.or]: [...arCategories.map(a => { return { name: a.name } })] }, { transaction: t }),        
