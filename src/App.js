@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./App.scss";
 import config from "./config/config";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -17,9 +17,12 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import './styles/react-stepzilla.scss';
 import { ThemeProvider } from "@mui/styles";
 import { createTheme } from "@mui/system";
+import { useSelector, useDispatch } from "react-redux";
+import { setLoading } from './reducers/loadingSlice';
 
 function App() {
-  const [loading, setLoading] = useState(false);
+  const isLoading = useSelector((state) => state.loading.value);
+  const dispatch = useDispatch();
 
   // Custom theme
   const theme = createTheme({
@@ -32,23 +35,24 @@ function App() {
   });
 
   useEffect(() => {
-    setLoading(true);
+    dispatch(setLoading(true));
     fetch(`${config.API_URL}/api`)
       .then(res => res.json())
       .then(data => {
         if (data && data.message === 'Hello from server!') {
-          setLoading(false);
+          dispatch(setLoading(false));
         }
       });
+  // eslint-disable-next-line
   }, []);
 
   return (
     <div>
-      {loading ?
+      {isLoading ?
         <div className="loader-container">
           <ClipLoader
             color="limegreen"
-            loading={loading}
+            loading={isLoading}
             size={150}
             aria-label="Loading Spinner"
             data-testid="loader"
