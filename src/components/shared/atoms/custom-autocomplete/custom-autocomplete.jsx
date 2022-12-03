@@ -32,6 +32,7 @@ function CustomAutocomplete(props) {
                 }
             })();
         }
+    // eslint-disable-next-line
     }, [loading]);
 
     // Clear the options when the store prop is changed (the selected store is changed)
