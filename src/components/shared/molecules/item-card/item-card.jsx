@@ -5,68 +5,59 @@ import './item-card.scss';
 import NumberStepper from '../../atoms/number-stepper/number-stepper';
 import { CloudinaryContext, Image } from 'cloudinary-react';
 
-class ItemCard extends React.Component {
-    constructor(props) {
-        super(props);
+function ItemCard(props) {
+    const defaultItemImageFallback = 'v1669646434/items/8cee1e1e-51b9-4e94-bb92-903807903149';
 
-        this.state = {
-        };
-
-        this.defaultItemImageFallback = 'v1669646434/items/8cee1e1e-51b9-4e94-bb92-903807903149';
-    }
-
-    render() {
-        return (
-            <ListItem
-                dense={true}
-                className={"item-card " + (!this.props.handleQuantityChange ? 'no-quantity' : '')}
-                alignItems="flex-start"
-                secondaryAction={
-                    this.props.handleQuantityChange ?
-                        <NumberStepper handleQuantityChange={this.props.handleQuantityChange} value={this.props.item.quantity} /> : false
+    return (
+        <ListItem
+            dense={true}
+            className={"item-card " + (!props.handleQuantityChange ? 'no-quantity' : '')}
+            alignItems="flex-start"
+            secondaryAction={
+                props.handleQuantityChange ?
+                    <NumberStepper handleQuantityChange={props.handleQuantityChange} value={props.item.quantity} /> : false
+            }
+        >
+            <ListItemAvatar>
+                <CloudinaryContext cloudName="dbakjb75c">
+                    <Avatar
+                        variant="rounded"
+                        sx={{ width: 56, height: 56 }}
+                        alt={props.item.name}
+                        component={
+                            () => {
+                                return (<Image publicId={props.item.image ? `v1669646434/items/${props.item.image}` : defaultItemImageFallback} width="50" />);
+                            }
+                        }
+                    ></Avatar>
+                </CloudinaryContext>
+            </ListItemAvatar>
+            <ListItemText
+                className="item-col"
+                primary={
+                    <React.Fragment>
+                        <Typography
+                            className="item-name"
+                            component="span"
+                            variant="body2"
+                        >
+                            {props.item.name}
+                        </Typography>
+                    </React.Fragment>
+                }
+                secondary={
+                    <React.Fragment>
+                        {props.item.size}
+                        {
+                            props.item.price ?
+                                <span className="item-price">₱{props.item.price.toFixed(2)}</span> : null
+                        }
+                    </React.Fragment>
                 }
             >
-                <ListItemAvatar>
-                    <CloudinaryContext cloudName="dbakjb75c">
-                        <Avatar
-                            variant="rounded"
-                            sx={{ width: 56, height: 56 }}
-                            alt={this.props.item.name}
-                            component={
-                                () => {
-                                    return (<Image publicId={this.props.item.image ? `v1669646434/items/${this.props.item.image}` : this.defaultItemImageFallback} width="50" />);
-                                }
-                            }
-                        ></Avatar>
-                    </CloudinaryContext>
-                </ListItemAvatar>
-                <ListItemText
-                    className="item-col"
-                    primary={
-                        <React.Fragment>
-                            <Typography
-                                className="item-name"
-                                component="span"
-                                variant="body2"
-                            >
-                                {this.props.item.name}
-                            </Typography>
-                        </React.Fragment>
-                    }
-                    secondary={
-                        <React.Fragment>
-                            {this.props.item.size}
-                            {
-                                this.props.item.price ?
-                                    <span className="item-price">₱{this.props.item.price.toFixed(2)}</span> : null
-                            }
-                        </React.Fragment>
-                    }
-                >
-                </ListItemText>
-            </ListItem>
-        );
-    }
+            </ListItemText>
+        </ListItem>
+    );
 }
 
 export default ItemCard;
