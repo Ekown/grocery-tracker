@@ -11,8 +11,6 @@ class CustomAutocomplete extends React.Component {
             loading: false,
             options: [],
         };
-
-        this.setInputValue(props.value);
     }
 
     componentDidUpdate(prevProps) {
@@ -31,22 +29,12 @@ class CustomAutocomplete extends React.Component {
     }
 
     /**
-     * Set the autocomplete input value 
-     * 
-     * @param {Object} value 
-     */
-     setInputValue(value) {
-        this.inputValue = value?.name ?? '';
-    }
-
-    /**
      * Handle field changes
      * 
      * @param {Object|Event} event 
      * @param {Object} value 
      */
     handleChange(event, value) {
-        this.setInputValue(value);
         this.props.onChange(value);
     }
 
@@ -68,15 +56,14 @@ class CustomAutocomplete extends React.Component {
                 clearOnBlur
                 handleHomeEndKeys
                 freeSolo
-                // value={this.value}
-                inputValue={this.inputValue}
+                value={this.props.value ?? ''}
                 size={this.props.size ?? 'medium'}
                 name={this.props.name}
                 open={this.state.open}
                 options={this.state.options}
                 loading={this.state.loading}
                 isOptionEqualToValue={(option, value) => option.name === value.name}
-                getOptionLabel={(option) => option.name}
+                getOptionLabel={(option) => option.name || ''}
                 onChange={(e, v) => this.handleChange(e, v)}
                 onOpen={() => {
                     this.setState({

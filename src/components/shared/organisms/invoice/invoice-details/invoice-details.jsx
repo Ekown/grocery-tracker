@@ -10,8 +10,10 @@ import { setBagger, setBranch, setCashier, setStore, setTransactionDate } from '
 import CustomAutocomplete from '../../../atoms/custom-autocomplete/custom-autocomplete';
 
 function InvoiceDetails() {
-    const invoiceFormData = useSelector((state) => state.addInvoice.invoice);
+    const { store, branch, transactionDate, cashier, bagger } = useSelector((state) => state.addInvoice.invoice);
     const dispatch = useDispatch();
+
+    // console.log(store);
 
     /**
      * Fetch all baggers from the API
@@ -72,7 +74,7 @@ function InvoiceDetails() {
                     size="small"
                     label="Store"
                     name="store"
-                    value={invoiceFormData.store}
+                    value={store}
                     fetchOptions={() => fetchStores()}
                     onChange={(value) => {
                         dispatch(setStore(value));
@@ -85,25 +87,25 @@ function InvoiceDetails() {
                 />
             </Grid2>
             {
-                invoiceFormData.store ?
+                store ?
                     <Grid2>
                         <CustomAutocomplete
                             size="small"
                             label="Branch"
                             name="branch"
-                            value={invoiceFormData.branch}
-                            fetchOptions={() => fetchBranchByStore(invoiceFormData.store.id)}
+                            value={branch}
+                            fetchOptions={() => fetchBranchByStore(store.id)}
                             onChange={(value) => {
                                 dispatch(setBranch(value));
                             }}
-                            store={invoiceFormData.store.id}
+                            store={store.id}
                         />
                     </Grid2> : null
             }
             <Grid2>
                 <DatePicker
                     label="Transaction Date"
-                    value={dayjs(invoiceFormData.transactionDate)}
+                    value={dayjs(transactionDate)}
                     onChange={(value) => {
                         dispatch(setTransactionDate(dayjs(value).format()));
                     }}
@@ -115,7 +117,7 @@ function InvoiceDetails() {
                     size="small"
                     label="Cashier"
                     name="cashier"
-                    value={invoiceFormData.cashier}
+                    value={cashier}
                     fetchOptions={() => fetchCashiers()}
                     onChange={(value) => {
                         dispatch(setCashier(value));
@@ -127,7 +129,7 @@ function InvoiceDetails() {
                     size="small"
                     label="Bagger"
                     name="bagger"
-                    value={invoiceFormData.bagger}
+                    value={bagger}
                     fetchOptions={() => fetchBaggers()}
                     onChange={(value) => {
                         dispatch(setBagger(value));
