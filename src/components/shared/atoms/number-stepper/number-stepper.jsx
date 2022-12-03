@@ -1,52 +1,38 @@
 // React
 import { Button, ButtonGroup } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './number-stepper.scss';
 
-class NumberStepper extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            value: this.props.value,
-        };
-    }
+function NumberStepper(props) {
+    const [value, setValue] = useState(props.value);
 
     /**
      * Handles incrementing the value
      */
-    handleIncrement = () => {
-        this.setState(prevProps => { return { value: prevProps.value + 1 } }, () => this.props.handleQuantityChange(this.state.value));
-        
+    const handleIncrement = () => {
+        setValue(value + 1);
+
     }
 
     /**
      * Handles decrementing the value
      */
-    handleDecrement = () => {
-        this.setState(prevProps => { return { value: prevProps.value - 1 } }, () => this.props.handleQuantityChange(this.state.value));
+     const handleDecrement = () => {
+        setValue(value - 1);
     }
 
-    render() {
-        // return (
-        //     <div className="number-stepper">
-        //         <Button className="number-stepper__minus" variant="contained">-</Button>
-        //         <TextField
-        //             className="number-stepper__value"
-        //             value={this.props.value}
-        //             inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-        //         ></TextField>
-        //         <Button className="number-stepper__plus" variant="contained">+</Button>
-        //     </div>
-        // );
-        return (
-            <ButtonGroup size="small" aria-label="small outlined button group" className="number-stepper">
-                <Button className="number-stepper__plus" size="small" variant="contained" onClick={this.handleIncrement}>+</Button>
-                <Button className="number-stepper__value" size="small" variant="outlined" disabled>{this.state.value}</Button>
-                <Button className="number-stepper__minus" size="small" variant="contained" disabled={this.state.value === 0} onClick={this.handleDecrement}>-</Button>
-            </ButtonGroup>
-        )
-    }
+    useEffect(() => {
+        props.handleQuantityChange(value)
+    // eslint-disable-next-line
+    }, [value]);
+
+    return (
+        <ButtonGroup size="small" aria-label="small outlined button group" className="number-stepper">
+            <Button className="number-stepper__plus" size="small" variant="contained" onClick={handleIncrement}>+</Button>
+            <Button className="number-stepper__value" size="small" variant="outlined" disabled>{value}</Button>
+            <Button className="number-stepper__minus" size="small" variant="contained" disabled={value === 0} onClick={handleDecrement}>-</Button>
+        </ButtonGroup>
+    );
 }
 
 export default NumberStepper;
