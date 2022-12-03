@@ -6,6 +6,7 @@ import Grid2 from '@mui/material/Unstable_Grid2';
 const NotFoundPage = () => {
     const errorCode = '404';
     const errorMsg = 'We are sorry, but the page you requested was not found.';
+    
     return (
         <Container>
             <Grid2 container spacing="6">

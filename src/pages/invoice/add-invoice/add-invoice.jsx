@@ -3,172 +3,90 @@ import './add-invoice.scss';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import { Card, CardContent, Container, Fab, Zoom } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
 import StepZilla from "react-stepzilla";
 import InvoiceDetails from '../../../components/shared/organisms/invoice/invoice-details/invoice-details';
-import { withStyles } from '@mui/styles';
+import { useTheme } from '@mui/material/styles';
 import InvoiceItemList from '../../../components/shared/organisms/invoice/invoice-item-list/invoice-item-list';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentStep, setOpen } from '../../../reducers/invoice/add-invoice/addInvoiceSlice';
 
-class AddInvoice extends React.Component {
-    constructor() {
-        super();
+function AddInvoice() {
+    const theme = useTheme();    
+    const isModalOpen = useSelector((state) => state.addInvoice.ui.open);
+    const currentStep = useSelector((state) => state.addInvoice.ui.currentStep);
+    const dispatch = useDispatch();
 
-        this.state = {
-            formData: {
-                transactionDate: dayjs(new Date()), //Initialize the transaction date to the current day
-                store: null,
-                branch: null,
-                cashier: null,
-                bagger: null,
-            },
-            currentStep: 0,
-            open: false,
-        };
-    }
+    // Set the steps for the form
+    const steps = [
+        { name: 'Details', component: <InvoiceDetails /> },
+        {
+            name: 'Items', component: <InvoiceItemList open={isModalOpen}
+                handleModalClose={() => {
+                    dispatch(setOpen(false))
+                }}
+            />
+        },
+    ];
 
-    /**
-     * Set form field change handlers for lifting state up
-     */
-    setFormChangeHandlers() {
-        this.formChanges = {
-            store: (store) => {
-                this.setState(prevState => {
-                    return {
-                        ...prevState,
-                        formData: {
-                            ...prevState.formData,
-                            store: store,
-                        }
-                    };
-                });
-            },
-            branch: (branch) => {
-                this.setState(prevState => {
-                    return {
-                        ...prevState,
-                        formData: {
-                            ...prevState.formData,
-                            branch: branch,
-                        }
-                    };
-                });
-            },
-            transactionDate: (transactionDate) => {
-                this.setState(prevState => {
-                    return {
-                        ...prevState,
-                        formData: {
-                            ...prevState.formData,
-                            transactionDate: transactionDate,
-                        }
-                    };
-                });
-            },
-            cashier: (cashier) => {
-                this.setState(prevState => {
-                    return {
-                        ...prevState,
-                        formData: {
-                            ...prevState.formData,
-                            cashier: cashier,
-                        }
-                    };
-                });
-            },
-            bagger: (bagger) => {
-                this.setState(prevState => {
-                    return {
-                        ...prevState,
-                        formData: {
-                            ...prevState.formData,
-                            bagger: bagger,
-                        }
-                    };
-                });
-            },
-        }
-    }
+    const transitionDuration = {
+        enter: theme.transitions.duration.enteringScreen,
+        exit: theme.transitions.duration.leavingScreen,
+    };
 
-    render() {
-        this.setFormChangeHandlers();
+    return (
+        <Container className="add-invoice">
+            <Grid2 xs={12}>
+                <h1 className="title">Add Invoice</h1>
+            </Grid2>
 
-        // Set the steps for the form
-        this.steps = [
-            { name: 'Details', component: <InvoiceDetails formData={this.state.formData} formChanges={this.formChanges} /> },
-            {
-                name: 'Items', component: <InvoiceItemList open={this.state.open}
-                    handleModalClose={() => {
-                        this.setState({
-                            open: false,
-                        });
-                    }}
-                />
-            },
-        ];
-
-        const transitionDuration = {
-            enter: this.props.theme.transitions.duration.enteringScreen,
-            exit: this.props.theme.transitions.duration.leavingScreen,
-        };
-
-        return (
-            <Container className="add-invoice">
+            <Grid2 container spacing={2}>
                 <Grid2 xs={12}>
-                    <h1 className="title">Add Invoice</h1>
+                    <Card>
+                        <CardContent className="card-content">
+                            <StepZilla
+                                steps={steps}
+                                nextButtonText="NEXT"
+                                backButtonText="PREVIOUS"
+                                backButtonCls="btn primary"
+                                nextButtonCls="btn primary"
+                                onStepChange={(step) => {
+                                    dispatch(setCurrentStep(step));
+                                }}
+                            />
+                        </CardContent>
+                    </Card>
                 </Grid2>
+            </Grid2>
 
-                <Grid2 container spacing={2}>
-                    <Grid2 xs={12}>
-                        <Card>
-                            <CardContent className="card-content">
-                                <StepZilla
-                                    steps={this.steps}
-                                    nextButtonText="NEXT"
-                                    backButtonText="PREVIOUS"
-                                    backButtonCls="btn primary"
-                                    nextButtonCls="btn primary"
-                                    onStepChange={(step) => {
-                                        this.setState({
-                                            currentStep: step,
-                                        });
-                                    }}
-                                />
-                            </CardContent>
-                        </Card>
-                    </Grid2>
-                </Grid2>
-
-                <Zoom
-                    key="primary"
-                    in={this.state.currentStep === 1}
-                    timeout={transitionDuration}
-                    style={{
-                        transitionDelay: `${this.state.currentStep === 1 ? transitionDuration.exit : 0}ms`,
-                    }}
-                    unmountOnExit
-                >
-                    <Fab
-                        sx={
-                            {
-                                position: 'absolute',
-                                bottom: 16,
-                                right: 16,
-                            }
+            <Zoom
+                key="primary"
+                in={currentStep === 1}
+                timeout={transitionDuration}
+                style={{
+                    transitionDelay: `${currentStep === 1 ? transitionDuration.exit : 0}ms`,
+                }}
+                unmountOnExit
+            >
+                <Fab
+                    sx={
+                        {
+                            position: 'absolute',
+                            bottom: 16,
+                            right: 16,
                         }
-                        aria-label="Add"
-                        color="primary"
-                        onClick={() => {
-                            this.setState({
-                                open: true,
-                            });
-                        }}
-                    >
-                        <AddIcon />
-                    </Fab>
-                </Zoom>
-            </Container>
-        );
-    }
+                    }
+                    aria-label="Add"
+                    color="primary"
+                    onClick={() => {
+                        dispatch(setOpen(true))
+                    }}
+                >
+                    <AddIcon />
+                </Fab>
+            </Zoom>
+        </Container>
+    );
 }
 
-export default withStyles({}, { withTheme: true })(AddInvoice);
+export default AddInvoice;

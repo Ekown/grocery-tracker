@@ -43,8 +43,7 @@ function App() {
           dispatch(setLoading(false));
         }
       });
-  // eslint-disable-next-line
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
