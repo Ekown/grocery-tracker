@@ -13,8 +13,6 @@ function InvoiceDetails() {
     const { store, branch, transactionDate, cashier, bagger } = useSelector((state) => state.addInvoice.invoice);
     const dispatch = useDispatch();
 
-    // console.log(store);
-
     /**
      * Fetch all baggers from the API
      * 
@@ -78,11 +76,7 @@ function InvoiceDetails() {
                     fetchOptions={() => fetchStores()}
                     onChange={(value) => {
                         dispatch(setStore(value));
-
-                        // If the selected store is cleared, clear the branch field too
-                        if (value === null) {
-                            dispatch(setBranch(null));
-                        }
+                        dispatch(setBranch(null));
                     }}
                 />
             </Grid2>
