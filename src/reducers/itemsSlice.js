@@ -17,7 +17,7 @@ export const itemsSlice = createSlice({
             let name = action.payload?.name || action.payload?.Product?.name || ''; 
 
             state.items.push({
-                image: action.payload?.image_url || action.payload?.image,
+                image_url: action.payload?.image_url || action.payload?.image,
                 id: action.payload.id,
                 name: name,
                 size: action.payload.size,
