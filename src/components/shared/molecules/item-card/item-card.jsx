@@ -49,7 +49,7 @@ function ItemCard(props) {
                     <React.Fragment>
                         {props.item.size}
                         {
-                            props.item.price ?
+                            !!props.item.price ?
                                 <span className="item-price">₱{props.item.price.toFixed(2)}</span> : null
                         }
                     </React.Fragment>

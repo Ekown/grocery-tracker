@@ -1,6 +1,14 @@
 const Item = (product) => {
-    let price = product?.price || product.Prices[0].unit_price || 0;
+    let price = 0;
 
+    // Set the item price based on the price property or the Prices array unit price property
+    if (product.price) {
+        price = product.price;
+    } else if (!!product.Prices && product.Prices.length !== 0 && product.Prices[0]?.unit_price) {
+        price = product.Prices[0].unit_price;
+    }
+
+    // Convert the price to a float integer if its a string
     if (typeof price === 'string') {
         price = parseFloat(price);
     }
