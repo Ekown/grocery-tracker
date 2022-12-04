@@ -5,66 +5,86 @@ import './invoice-item-list.scss';
 import ItemCard from '../../../molecules/item-card/item-card';
 import AddItemModal from '../../../molecules/modals/invoice/add-item/add-item-modal';
 import { useNonInitialEffect } from '../../../../../hooks/useNonInitialEffect';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem, updateItem } from '../../../../../reducers/itemsSlice';
 
 function InvoiceItemList(props) {
     // const [showCamera, setShowCamera] = useState(false);
     // const [scanResult, setScanResult] = useState(null);
-    const [items, setItems] = useState([
+    const { items } = useSelector((state) => state.items);
+    const dispatch = useDispatch();
+
+    const testItems = [
         {
-            image: "test",
+            image_url: "test",
             id: '11',
-            name: "Stik-O Jr. Choco",
+            Product: {
+                name: "Stik-O Jr. Choco"
+            },
             size: "380G",
             quantity: 1,
             price: 70.75,
-            cost: 70.75,
         },
         {
-            image: "test",
+            image_url: "test",
             id: '22',
-            name: "Del Monte Four Seasons",
+            Product: {
+                name: "Del Monte Four Seasons"
+            },
             size: "1L",
             quantity: 2,
             price: 87.30,
-            cost: 2 * 87.30,
         },
         {
-            image: "test",
+            image_url: "test",
             id: '33',
-            name: "Del Monte Pineapple Strawberry",
+            Product: {
+                name: "Del Monte Pineapple Strawberry"
+            },
             size: "1L",
             quantity: 1,
             price: 84.30,
-            cost: 1 * 84.30,
         },
         {
-            image: "test",
+            image_url: "test",
             id: '331',
-            name: "Krem Top Creamer",
+            Product: {
+                name: "Krem Top Creamer"
+            },
             size: "500G",
             quantity: 5,
             price: 69.10,
-            cost: 5 * 69.10,
         },
         {
-            image: "test",
+            image_url: "test",
             id: '44',
-            name: "Purefoods Liver Spread",
+            Product: {
+                name: "Purefoods Liver Spread"
+            },
             size: "85G",
             quantity: 1,
             price: 28.50,
-            cost: 2 * 28.50,
         },
         {
-            image: "test",
+            image_url: "test",
             id: '55',
-            name: "Quaker Instant Oats Chocolate",
+            Product: {
+                name: "Quaker Instant Oats Chocolate"
+            },
             size: "500G",
             quantity: 2,
             price: 104,
-            cost: 2 * 104,
         },
-    ]);
+    ];
+
+    // Remove this before deploying to production
+    useNonInitialEffect(() => {
+        if (items.length === 0) {
+            testItems.forEach(item => {
+                dispatch(addItem(item));
+            });
+        }        
+    }, []);
 
     /**
      * Get the computed total cost of the items
@@ -103,15 +123,7 @@ function InvoiceItemList(props) {
      * @param {Object} product The added product object from the Add Product modal
      */
     const addProduct = product => {
-        setItems([...items, {
-            image: product.image_url,
-            id: product.id,
-            name: product.Product.name,
-            size: product.size,
-            quantity: 1,
-            // price: 70.75,
-            // cost: 70.75,
-        }]);
+        dispatch(addItem(product));
     }
 
     /**
@@ -121,13 +133,15 @@ function InvoiceItemList(props) {
      * @param {Number} item - Item object
      */
     const updateItemQuantity = (updatedQuantity, item) => {
-        let updatedItems = items;
         let foundIndex = items.findIndex(x => x.id === item.id);
 
-        // Update the corresponding item in the items array
-        updatedItems[foundIndex] = { ...items[foundIndex], quantity: updatedQuantity, cost: (updatedQuantity * item.price) };
-
-        setItems([...updatedItems]);
+        dispatch(updateItem({
+            index: foundIndex,
+            data: {
+                quantity: updatedQuantity,
+                cost: (updatedQuantity * item.price),
+            },
+        }));
     }
 
     // scan = () => {
