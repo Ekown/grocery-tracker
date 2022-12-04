@@ -7,6 +7,7 @@ import Grid2 from '@mui/material/Unstable_Grid2';
 import CustomModal from '../../../../custom-modal/custom-modal';
 import './add-item-modal.scss';
 import ItemCard from '../../../item-card/item-card';
+import Item from '../../../../../../models/item';
 
 function AddItemModal(props) {
     const [serialNumber, setSerialNumber] = useState(null);
@@ -22,23 +23,7 @@ function AddItemModal(props) {
             .then(res => res.json())
             .then(product => {
                 if (product && product !== {}) {
-                    let price = product?.price || product.Prices[0].unit_price || 0;
-
-                    if (typeof price === 'string') {
-                        price = parseFloat(price);
-                    }
-
-                    let cost = product.price * product.quantity;
-
-                    setProduct({
-                        image_url: product.image_url,
-                        id: product.id,
-                        name: product.Product.name,
-                        size: product.size,
-                        quantity: 1,
-                        price: price,
-                        cost: cost,
-                    });
+                    setProduct(Item(product))
                 } else {
                     setProduct(null);
                 }

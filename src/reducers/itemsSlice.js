@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import Item from '../models/item';
 
 export const itemsSlice = createSlice({
     name: 'items',
@@ -7,24 +8,7 @@ export const itemsSlice = createSlice({
     },
     reducers: {
         addItem: (state, action) => {
-            let price = action.payload?.price || action.payload.Prices[0].unit_price || 0;
-
-            if (typeof price === 'string') {
-                price = parseFloat(price);
-            }
-
-            let cost = price * action.payload.quantity || 0;
-            let name = action.payload?.name || action.payload?.Product?.name || ''; 
-
-            state.items.push({
-                image_url: action.payload?.image_url || action.payload?.image,
-                id: action.payload.id,
-                name: name,
-                size: action.payload.size,
-                quantity: action.payload.quantity,
-                price: price,
-                cost: cost,
-            });
+            state.items.push(Item(action.payload));
         },
 
         setItems: (state, action) => {
