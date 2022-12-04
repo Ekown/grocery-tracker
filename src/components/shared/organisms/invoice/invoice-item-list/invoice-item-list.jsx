@@ -208,7 +208,7 @@ function InvoiceItemList(props) {
                         items.length > 0 ?
                             items.map((item, index) => (
                                 <ItemCard
-                                    key={index}
+                                    key={`${item.id}.${index}`}
                                     item={item}
                                     handleQuantityChange={e => updateItemQuantity(e, item)}
                                 />
