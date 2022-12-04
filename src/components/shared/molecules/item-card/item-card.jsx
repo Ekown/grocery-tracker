@@ -26,7 +26,7 @@ function ItemCard(props) {
                         alt={props.item.name}
                         component={
                             () => {
-                                return (<Image publicId={props.item.image ? `v1669646434/items/${props.item.image}` : defaultItemImageFallback} width="50" />);
+                                return (<Image publicId={props.item.image_url ? `v1669646434/items/${props.item.image_url}` : defaultItemImageFallback} width="50" />);
                             }
                         }
                     ></Avatar>

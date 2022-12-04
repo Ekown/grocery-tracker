@@ -22,7 +22,23 @@ function AddItemModal(props) {
             .then(res => res.json())
             .then(product => {
                 if (product && product !== {}) {
-                    setProduct(product);
+                    let price = product?.price || product.Prices[0].unit_price || 0;
+
+                    if (typeof price === 'string') {
+                        price = parseFloat(price);
+                    }
+
+                    let cost = product.price * product.quantity;
+
+                    setProduct({
+                        image_url: product.image_url,
+                        id: product.id,
+                        name: product.Product.name,
+                        size: product.size,
+                        quantity: 1,
+                        price: price,
+                        cost: cost,
+                    });
                 } else {
                     setProduct(null);
                 }
@@ -61,15 +77,7 @@ function AddItemModal(props) {
                                 product?.id ?
                                     <div>
                                         <ItemCard
-                                            item={{
-                                                image: product.image_url,
-                                                id: product.id,
-                                                name: product.Product.name,
-                                                size: product.size,
-                                                quantity: 1,
-                                                // price: 70.75,
-                                                // cost: 70.75,
-                                            }}
+                                            item={product}
                                         />
                                         <center>
                                             <Button
