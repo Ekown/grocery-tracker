@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import config from "./config.json";
 import Quagga from "quagga";
 import './quagga-scanner.scss';
 import { Button } from "@mui/material";
 import DocumentScannerOutlinedIcon from '@mui/icons-material/DocumentScannerOutlined';
 import CustomModal from "../../custom-modal/custom-modal";
+import { useNonInitialEffect } from "../../../../hooks/useNonInitialEffect";
 
 const QuaggaScanner = props => {
     const { onDetected } = props;
     const [showScanner, setShowScanner] = useState(false);
 
-    useEffect(() => {
+    useNonInitialEffect(() => {
         if (!showScanner) {
             return;
         }

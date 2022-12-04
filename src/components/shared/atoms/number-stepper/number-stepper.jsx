@@ -1,6 +1,7 @@
 // React
 import { Button, ButtonGroup } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useNonInitialEffect } from '../../../../hooks/useNonInitialEffect';
 import './number-stepper.scss';
 
 function NumberStepper(props) {
@@ -11,19 +12,18 @@ function NumberStepper(props) {
      */
     const handleIncrement = () => {
         setValue(value + 1);
-
     }
 
     /**
      * Handles decrementing the value
      */
-     const handleDecrement = () => {
+    const handleDecrement = () => {
         setValue(value - 1);
     }
 
-    useEffect(() => {
+    useNonInitialEffect(() => {
         props.handleQuantityChange(value)
-    // eslint-disable-next-line
+        // eslint-disable-next-line
     }, [value]);
 
     return (

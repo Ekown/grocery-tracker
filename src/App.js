@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.scss";
 import config from "./config/config";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -19,6 +19,7 @@ import { ThemeProvider } from "@mui/styles";
 import { createTheme } from "@mui/system";
 import { useSelector, useDispatch } from "react-redux";
 import { setLoading } from './reducers/loadingSlice';
+import { useNonInitialEffect } from "./hooks/useNonInitialEffect";
 
 function App() {
   const isLoading = useSelector((state) => state.loading.value);
@@ -34,7 +35,7 @@ function App() {
     }
   });
 
-  useEffect(() => {
+  useNonInitialEffect(() => {
     dispatch(setLoading(true));
     fetch(`${config.API_URL}/api`)
       .then(res => res.json())

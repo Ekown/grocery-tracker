@@ -1,6 +1,7 @@
 // React
 import { Autocomplete, CircularProgress, TextField } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useNonInitialEffect } from '../../../../hooks/useNonInitialEffect';
 
 function CustomAutocomplete(props) {
     const [open, setOpen] = useState(false);
@@ -18,7 +19,7 @@ function CustomAutocomplete(props) {
     }
 
     // Fetch the options if the dropdown is opened and has no options yet
-    useEffect(() => {
+    useNonInitialEffect(() => {
         if (!loading) {
             return undefined;
         }
@@ -36,7 +37,7 @@ function CustomAutocomplete(props) {
     }, [loading]);
 
     // Clear the options when the store prop is changed (the selected store is changed)
-    useEffect(() => {
+    useNonInitialEffect(() => {
         if (!props?.store) {
             return undefined;
         }
