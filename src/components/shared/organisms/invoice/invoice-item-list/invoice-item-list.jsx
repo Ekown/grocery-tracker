@@ -7,6 +7,10 @@ import AddItemModal from '../../../molecules/modals/invoice/add-item/add-item-mo
 import { useNonInitialEffect } from '../../../../../hooks/useNonInitialEffect';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, updateItem } from '../../../../../reducers/itemsSlice';
+import { SwipeableList, SwipeableListItem, SwipeAction, TrailingActions, Type as ListType, } from 'react-swipeable-list';
+import 'react-swipeable-list/dist/styles.css';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function InvoiceItemList(props) {
     // const [showCamera, setShowCamera] = useState(false);
@@ -83,8 +87,23 @@ function InvoiceItemList(props) {
             testItems.forEach(item => {
                 dispatch(addItem(item));
             });
-        }        
+        }
     }, []);
+
+    const trailingActions = () => (
+        <TrailingActions>
+            <SwipeAction className="edit-swipe-action" onClick={() => console.info('swipe action triggered')}>
+                <EditIcon />
+            </SwipeAction>
+            <SwipeAction
+                className="delete-swipe-action"
+                destructive={true}
+                onClick={() => console.info('swipe action triggered')}
+            >
+                <DeleteIcon />
+            </SwipeAction>
+        </TrailingActions>
+    );
 
     /**
      * Get the computed total cost of the items
@@ -203,21 +222,29 @@ function InvoiceItemList(props) {
             <button onClick={this.stopScan}>stop scan</button>
             <div id="reader" width="600px"></div> */}
             <div className="item-list-container">
-                <List className="item-list" sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                <SwipeableList
+                    className="item-list"
+                    type={ListType.IOS}
+                    threshold={0}
+                >
                     {
                         items.length > 0 ?
                             items.map((item, index) => (
-                                <ItemCard
+                                <SwipeableListItem
                                     key={`${item.id}.${index}`}
-                                    item={item}
-                                    handleQuantityChange={e => updateItemQuantity(e, item)}
-                                />
+                                    trailingActions={trailingActions()}
+                                >
+                                    <ItemCard
+                                        item={item}
+                                        handleQuantityChange={e => updateItemQuantity(e, item)}
+                                    />
+                                </SwipeableListItem>
                             )) :
                             (
                                 <div>No items in the Invoice</div>
                             )
                     }
-                </List>
+                </SwipeableList>
             </div>
             <div className="total">
                 <span className="items">

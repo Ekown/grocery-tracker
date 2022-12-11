@@ -5,7 +5,26 @@
 
         .item-list {
             background-color: #ffffff00;
-            margin-top: -1.25rem;
+            // margin-top: -1.25rem;
+            width: 100%;
+            max-width: 360px;
+
+            .edit-swipe-action {
+                background-color: #296690;
+            }
+
+            .delete-swipe-action {
+                background-color: #bc281e;
+            }
+
+            .swipe-action {
+                flex-wrap: wrap;
+                align-content: center;
+
+                svg {
+                    color: lightgray;
+                }
+            }
         }
     }
 
