@@ -16,7 +16,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import './styles/react-stepzilla.scss';
 import { ThemeProvider } from "@mui/styles";
-import { createTheme } from "@mui/system";
+import { createTheme } from "@mui/material/styles";
 import { useSelector, useDispatch } from "react-redux";
 import { setLoading } from './reducers/loadingSlice';
 import { useNonInitialEffect } from "./hooks/useNonInitialEffect";
