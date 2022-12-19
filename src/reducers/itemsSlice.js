@@ -11,6 +11,11 @@ export const itemsSlice = createSlice({
             state.items.push(Item(action.payload));
         },
 
+        removeItem: (state, action) => {
+            // @TODO: We might need to optimize deleting items from the array
+            state.items = state.items.filter(item => item.id !== action.payload);
+        },
+
         setItems: (state, action) => {
             state.items = action.payload;
         },
@@ -31,6 +36,6 @@ export const itemsSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { addItem, setItems, updateItem } = itemsSlice.actions
+export const { addItem, removeItem, setItems, updateItem } = itemsSlice.actions
 
 export default itemsSlice.reducer

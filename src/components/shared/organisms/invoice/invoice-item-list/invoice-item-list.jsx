@@ -6,7 +6,7 @@ import ItemCard from '../../../molecules/item-card/item-card';
 import AddItemModal from '../../../molecules/modals/invoice/add-item/add-item-modal';
 import { useNonInitialEffect } from '../../../../../hooks/useNonInitialEffect';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, updateItem } from '../../../../../reducers/itemsSlice';
+import { addItem, removeItem, updateItem } from '../../../../../reducers/itemsSlice';
 import { SwipeableList, SwipeableListItem, SwipeAction, TrailingActions, Type as ListType, } from 'react-swipeable-list';
 import 'react-swipeable-list/dist/styles.css';
 import EditIcon from '@mui/icons-material/Edit';
@@ -90,7 +90,22 @@ function InvoiceItemList(props) {
         }
     }, []);
 
-    const trailingActions = () => (
+    /**
+     * Deletes the item from the list and store
+     * 
+     * @param {String} id ID of the item to be deleted 
+     */
+    const deleteItem = (id) => {
+        dispatch(removeItem(id));
+    }
+
+    /**
+     * Trailing actions for the list items
+     * 
+     * @param {String} id ID of the item which the trailing action is triggered
+     * @returns {ReactJSXElement}
+     */
+    const trailingActions = (id) => (
         <TrailingActions>
             <SwipeAction className="edit-swipe-action" onClick={() => console.info('swipe action triggered')}>
                 <EditIcon />
@@ -98,7 +113,7 @@ function InvoiceItemList(props) {
             <SwipeAction
                 className="delete-swipe-action"
                 destructive={true}
-                onClick={() => console.info('swipe action triggered')}
+                onClick={() => deleteItem(id)}
             >
                 <DeleteIcon />
             </SwipeAction>
@@ -232,7 +247,7 @@ function InvoiceItemList(props) {
                             items.map((item, index) => (
                                 <SwipeableListItem
                                     key={`${item.id}.${index}`}
-                                    trailingActions={trailingActions()}
+                                    trailingActions={trailingActions(item.id)}
                                 >
                                     <ItemCard
                                         item={item}
