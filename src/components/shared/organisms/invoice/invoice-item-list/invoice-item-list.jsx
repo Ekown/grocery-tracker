@@ -1,6 +1,5 @@
 // import { Html5Qrcode } from 'html5-qrcode';
 import React, { useState } from 'react';
-import { List } from '@mui/material';
 import './invoice-item-list.scss';
 import ItemCard from '../../../molecules/item-card/item-card';
 import AddItemModal from '../../../molecules/modals/invoice/add-item/add-item-modal';
