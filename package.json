@@ -3,6 +3,9 @@
   "homepage": "https://ekown.github.io/grocery-tracker",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "14.19.0"
+  },
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",

@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Server-side API for the Grocery Tracker app",
   "main": "index.js",
+  "engines": {
+    "node": "14.19.0"
+  },
   "scripts": {
     "start-dev": "npm run migrate:up && nodemon index.js",
     "start": "npm run migrate:up && nodejs index.js",
