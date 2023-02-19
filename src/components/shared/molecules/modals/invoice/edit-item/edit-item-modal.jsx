@@ -1,13 +1,10 @@
-import { Button, InputAdornment, TextField, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Stack } from '@mui/system';
-import React, { useState } from 'react';
-import config from "../../../../../../config/config";
-import QuaggaScanner from '../../../../atoms/quagga-scanner/quagga-scanner';
+import React from 'react';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import CustomModal from '../../../../custom-modal/custom-modal';
 import './edit-item-modal.scss';
 import ItemCard from '../../../item-card/item-card';
-import Item from '../../../../../../models/item';
 
 function EditItemModal(props) {
     // const [serialNumber, setSerialNumber] = useState(null);
