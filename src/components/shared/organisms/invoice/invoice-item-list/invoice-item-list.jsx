@@ -10,12 +10,19 @@ import { SwipeableList, SwipeableListItem, SwipeAction, TrailingActions, Type as
 import 'react-swipeable-list/dist/styles.css';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditItemModal from '../../../molecules/modals/invoice/edit-item/edit-item-modal';
+import { setOpenModal } from '../../../../../reducers/invoice/add-invoice/addInvoiceSlice';
 
 function InvoiceItemList(props) {
     // const [showCamera, setShowCamera] = useState(false);
     // const [scanResult, setScanResult] = useState(null);
     const { items } = useSelector((state) => state.items);
+    const modals = useSelector((state) => state.addInvoice.ui.modals);
+    const [editProduct, setEditProduct] = useState(null);
     const dispatch = useDispatch();
+
+    const addItemModal = modals.filter(modal => modal.name === 'add-item-modal')[0];
+    const editItemModal = modals.filter(modal => modal.name === 'edit-item-modal')[0];
 
     const testItems = [
         {
@@ -90,9 +97,18 @@ function InvoiceItemList(props) {
     }, []);
 
     /**
+     * Retrieves an item from the items array based on its id
+     * @param {Number} id - The id associated with the item to retrieve
+     * @returns {Object} The item object associated with the given id
+     */
+    const getItem = (id) => {
+        return items.filter(item => item.id === id)[0];
+    }
+
+    /**
      * Deletes the item from the list and store
      * 
-     * @param {String} id ID of the item to be deleted 
+     * @param {String} id - ID of the item to be deleted 
      */
     const deleteItem = (id) => {
         dispatch(removeItem(id));
@@ -106,7 +122,13 @@ function InvoiceItemList(props) {
      */
     const trailingActions = (id) => (
         <TrailingActions>
-            <SwipeAction className="edit-swipe-action" onClick={() => console.info('swipe action triggered')}>
+            <SwipeAction
+                className="edit-swipe-action"
+                onClick={() => {
+                    dispatch(setOpenModal('edit-item-modal'));
+                    setEditProduct(getItem(id));
+                }}
+            >
                 <EditIcon />
             </SwipeAction>
             <SwipeAction
@@ -270,13 +292,22 @@ function InvoiceItemList(props) {
             </div>
 
             <AddItemModal
-                open={props.open}
+                open={addItemModal.open}
                 closeModal={() => {
-                    props.handleModalClose();
+                    props.handleModalClose('add-item-modal');
                 }}
                 handleAddProduct={e => {
-                    props.handleModalClose();
+                    props.handleModalClose('add-item-modal');
                     addProduct(e);
+                }}
+            />
+
+            <EditItemModal
+                open={editItemModal.open}
+                product={editProduct}
+                closeModal={() => {
+                    props.handleModalClose('edit-item-modal');
+                    // setEditProduct(null);
                 }}
             />
         </div>

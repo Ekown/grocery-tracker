@@ -9,11 +9,10 @@ import InvoiceDetails from '../../../components/shared/organisms/invoice/invoice
 import { useTheme } from '@mui/material/styles';
 import InvoiceItemList from '../../../components/shared/organisms/invoice/invoice-item-list/invoice-item-list';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentStep, setOpen } from '../../../reducers/invoice/add-invoice/addInvoiceSlice';
+import { setCloseModal, setCurrentStep, setOpenModal } from '../../../reducers/invoice/add-invoice/addInvoiceSlice';
 
 function AddInvoice() {
-    const theme = useTheme();    
-    const isModalOpen = useSelector((state) => state.addInvoice.ui.open);
+    const theme = useTheme();
     const currentStep = useSelector((state) => state.addInvoice.ui.currentStep);
     const dispatch = useDispatch();
 
@@ -21,9 +20,9 @@ function AddInvoice() {
     const steps = [
         { name: 'Details', component: <InvoiceDetails /> },
         {
-            name: 'Items', component: <InvoiceItemList open={isModalOpen}
-                handleModalClose={() => {
-                    dispatch(setOpen(false))
+            name: 'Items', component: <InvoiceItemList
+                handleModalClose={(modalName) => {
+                    dispatch(setCloseModal(modalName))
                 }}
             />
         },
@@ -79,7 +78,7 @@ function AddInvoice() {
                     aria-label="Add"
                     color="primary"
                     onClick={() => {
-                        dispatch(setOpen(true))
+                        dispatch(setOpenModal('add-item-modal'));
                     }}
                 >
                     <AddIcon />
