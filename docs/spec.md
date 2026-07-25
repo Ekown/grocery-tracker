@@ -251,9 +251,9 @@ VITE_DEFAULT_USER_ID=00000000-0000-0000-0000-000000000001
 
 ## 10. Key Libraries & Versions
 
-- **Shared**: `zod@^3.22`, `uuid@^9.0`
+- **Shared**: `zod@^3.22`, `uuid@^14.0.1`
 - **Frontend**: `react@^18.2`, `vite@^5.0`, `dexie@^4.0`, `@zxing/library@^0.19`, `tesseract.js@^5.0`, `tailwindcss@^3.4`, `@radix-ui/react-*` (Shadcn)
-- **Backend**: `@nestjs/core@^10.0`, `@nestjs/sequelize@^10.0`, `sequelize@^6.32`, `pg@^8.11`, `@aws-sdk/client-s3@^3.500`, `bullmq@^5.0`
+- **Backend**: `@nestjs/core@^11.1.28`, `@nestjs/sequelize@^11.0.1`, `sequelize@^6.37.8`, `pg@^8.22`, `@aws-sdk/client-s3@^3.1095.0`, `bullmq@^5.0`
 
 ---
 
