@@ -2,7 +2,7 @@ services:
   - type: web
     name: grocery-tracker-app
     runtime: node
-    region: oregon
+    region: singapore
     plan: free
     buildCommand: npm ci && npm run build -w @grocery-tracker/shared-types && npm run build -w @grocery-tracker/backend
     startCommand: node packages/backend/dist/main
