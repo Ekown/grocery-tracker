@@ -13,11 +13,19 @@
         "format": "prettier --write \"**/*.{js,ts,tsx,json,css,md}\"",
         "format:check": "prettier --check \"**/*.{js,ts,tsx,json,css,md}\"",
         "lint": "npm run lint --workspaces --if-present",
-        "clean": "rm -rf packages/*/dist packages/*/node_modules node_modules"
+        "clean": "rm -rf packages/*/dist packages/*/node_modules node_modules",
+        "prepare": "husky"
     },
     "devDependencies": {
         "concurrently": "^8.2.0",
+        "husky": "^9.1.7",
+        "lint-staged": "^17.2.0",
         "prettier": "^3.3.0"
+    },
+    "lint-staged": {
+        "**/*.{js,ts,tsx,json,css,md}": [
+            "prettier --write"
+        ]
     },
     "engines": {
         "node": ">=24.0.0"
