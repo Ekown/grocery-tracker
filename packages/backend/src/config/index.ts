@@ -23,12 +23,23 @@ export class ConfigService {
 
     getNumber(key: string, fallback?: number): number {
         const val = process.env[key];
-        return val ? Number(val) : (fallback ?? 0);
+        if (val === undefined || val === null || val === "") {
+            return fallback ?? 0;
+        }
+        const parsed = Number(val);
+        if (Number.isNaN(parsed)) {
+            throw new Error(`Environment variable "${key}" has value "${val}" which is not a valid number.`);
+        }
+        return parsed;
     }
 
     /** Parses DATABASE_URL into connection components */
     getDatabaseConfig(): DatabaseConfig {
-        const url = new URL(process.env.DATABASE_URL!);
+        const raw = process.env.DATABASE_URL;
+        if (!raw) {
+            throw new Error("DATABASE_URL is not set. Check your .env file or environment variables.");
+        }
+        const url = new URL(raw);
         return {
             host: url.hostname,
             port: Number(url.port) || 5432,
