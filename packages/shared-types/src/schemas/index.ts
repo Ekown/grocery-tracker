@@ -39,7 +39,10 @@ export type Product = z.infer<typeof ProductSchema>;
 export const ProductStorePriceSchema = BaseEntity.extend({
     product_id: z.string().uuid(),
     store_id: z.string().uuid(),
-    price: z.number().positive().multipleOf(0.01),
+    price: z
+        .number()
+        .positive()
+        .refine((v) => Math.round(v * 100) / 100 === v, "Value must have at most 2 decimal places"),
     effective_date: z.string().datetime(),
     receipt_id: z.string().uuid().nullable().optional(),
 });
@@ -53,8 +56,16 @@ export type SyncStatus = z.infer<typeof SyncStatusEnum>;
 export const ReceiptSchema = BaseEntity.extend({
     user_id: z.string().uuid(),
     store_id: z.string().uuid(),
-    total_amount: z.number().positive().multipleOf(0.01).optional(),
-    tax: z.number().positive().multipleOf(0.01).optional(),
+    total_amount: z
+        .number()
+        .positive()
+        .refine((v) => Math.round(v * 100) / 100 === v, "Value must have at most 2 decimal places")
+        .optional(),
+    tax: z
+        .number()
+        .positive()
+        .refine((v) => Math.round(v * 100) / 100 === v, "Value must have at most 2 decimal places")
+        .optional(),
     date: z.string().datetime(),
     image_s3_key: z.string().nullable().optional(),
     sync_status: SyncStatusEnum.default("local"),
@@ -67,8 +78,14 @@ export const LineItemSchema = BaseEntity.extend({
     receipt_id: z.string().uuid(),
     product_id: z.string().uuid(),
     quantity: z.number().int().positive().default(1),
-    unit_price: z.number().positive().multipleOf(0.01),
-    total_price: z.number().positive().multipleOf(0.01),
+    unit_price: z
+        .number()
+        .positive()
+        .refine((v) => Math.round(v * 100) / 100 === v, "Value must have at most 2 decimal places"),
+    total_price: z
+        .number()
+        .positive()
+        .refine((v) => Math.round(v * 100) / 100 === v, "Value must have at most 2 decimal places"),
 });
 export type LineItem = z.infer<typeof LineItemSchema>;
 
