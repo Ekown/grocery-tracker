@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: grocery-tracker-app
+    runtime: node
+    region: oregon
+    plan: free
+    buildCommand: npm ci && npm run build -w @grocery-tracker/shared-types && npm run build -w @grocery-tracker/backend
+    startCommand: node packages/backend/dist/main
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3000"
+      - key: CORS_ORIGIN
+        value: https://ekown.github.io
+      - key: DATABASE_URL
+        sync: false # Set in Render dashboard
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_REGION
+        value: us-east-1
+      - key: S3_BUCKET_NAME
+        sync: false
+      - key: DEFAULT_USER_ID
+        sync: false
