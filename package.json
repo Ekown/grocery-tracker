@@ -1,22 +1,25 @@
 {
-  "name": "grocery-tracker",
-  "version": "2.0.0",
-  "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
-  "scripts": {
-    "dev": "npm run build -w @grocery-tracker/shared-types && concurrently -n backend,frontend \"npm run dev -w @grocery-tracker/backend\" \"npm run dev -w @grocery-tracker/frontend\"",
-    "build": "npm run clean:build && npm run build --workspaces --if-present",
-    "clean:build": "rm -f packages/*/tsconfig.tsbuildinfo",
-    "test": "npm run test --workspaces --if-present",
-    "lint": "npm run lint --workspaces --if-present",
-    "clean": "rm -rf packages/*/dist packages/*/node_modules node_modules"
-  },
-  "devDependencies": {
-    "concurrently": "^8.2.0"
-  },
-  "engines": {
-    "node": ">=24.0.0"
-  }
+    "name": "grocery-tracker",
+    "version": "2.0.0",
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "dev": "npm run build -w @grocery-tracker/shared-types && concurrently -n backend,frontend \"npm run dev -w @grocery-tracker/backend\" \"npm run dev -w @grocery-tracker/frontend\"",
+        "build": "npm run clean:build && npm run build --workspaces --if-present",
+        "clean:build": "rm -f packages/*/tsconfig.tsbuildinfo",
+        "test": "npm run test --workspaces --if-present",
+        "format": "prettier --write \"**/*.{js,ts,tsx,json,css,md}\"",
+        "format:check": "prettier --check \"**/*.{js,ts,tsx,json,css,md}\"",
+        "lint": "npm run lint --workspaces --if-present",
+        "clean": "rm -rf packages/*/dist packages/*/node_modules node_modules"
+    },
+    "devDependencies": {
+        "concurrently": "^8.2.0",
+        "prettier": "^3.3.0"
+    },
+    "engines": {
+        "node": ">=24.0.0"
+    }
 }

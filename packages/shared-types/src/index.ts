@@ -1,4 +1,4 @@
 // ── Barrel export for @grocery-tracker/shared-types ──
 
-export * from './schemas';
-export * from './interfaces';
+export * from "./schemas";
+export * from "./interfaces";
