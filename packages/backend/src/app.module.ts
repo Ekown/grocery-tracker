@@ -18,7 +18,7 @@ import { HealthModule } from "./health/health.module";
 
                 const sslMode = dbConfig.sslMode;
                 if (sslMode && ["require", "verify-ca", "verify-full"].includes(sslMode)) {
-                    dialectOptions.ssl = { require: true, rejectUnauthorized: sslMode === "verify-full" };
+                    dialectOptions.ssl = { require: true, rejectUnauthorized: false };
                 }
                 if (dbConfig.options) {
                     dialectOptions.options = dbConfig.options;
