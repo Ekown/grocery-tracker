@@ -15,13 +15,19 @@ jobs:
         with:
           node-version: 24.x
           cache: "npm"
-      - name: Install, build, and test
+      - name: Install and test
         run: |
           npm ci
-          npm run build -w @grocery-tracker/frontend
           npm test
-      - name: Deploy to gh-pages
+      - name: Build frontend
+        run: npm run build -w @grocery-tracker/frontend
+        env:
+          VITE_API_URL: ${{ vars.VITE_API_URL || 'https://grocery-tracker-app.onrender.com' }}
+      - name: Deploy frontend to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./packages/frontend/dist
+      - name: Trigger Render backend deployment
+        run: |
+          curl -X POST --fail --silent --show-error "${{ secrets.RENDER_DEPLOY_HOOK }}"
