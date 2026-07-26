@@ -10,8 +10,6 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: "3000"
       - key: CORS_ORIGIN
         value: https://ekown.github.io
       - key: DATABASE_URL
