@@ -13,6 +13,15 @@ import { HealthModule } from "./health/health.module";
             useFactory: (config: ConfigService) => ({
                 dialect: "postgres" as const,
                 ...config.getDatabaseConfig(),
+                dialectOptions:
+                    config.get("NODE_ENV") === "production"
+                        ? {
+                              ssl: {
+                                  require: true,
+                                  rejectUnauthorized: false,
+                              },
+                          }
+                        : undefined,
                 autoLoadModels: true,
                 synchronize: false, // Use migrations only
                 logging: config.get("NODE_ENV") === "development" ? (sql: string) => console.log(sql) : false,
