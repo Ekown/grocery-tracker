@@ -14,7 +14,7 @@
         "format:check": "prettier --check \"**/*.{js,ts,tsx,json,css,md}\"",
         "lint": "npm run lint --workspaces --if-present",
         "clean": "rm -rf packages/*/dist packages/*/node_modules node_modules",
-        "prepare": "husky"
+        "prepare": "husky || :"
     },
     "devDependencies": {
         "concurrently": "^10.0.4",
