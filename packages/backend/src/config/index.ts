@@ -7,6 +7,11 @@ dotenv.config({ path: path.resolve(__dirname, "../../../../.env") });
 
 /** Connection details extracted from DATABASE_URL */
 export interface DatabaseConfig {
+    host: string;
+    port: number;
+    username: string;
+    password: string;
+    database: string;
     connectionString: string;
     options?: string;
     sslMode?: string;
@@ -39,6 +44,11 @@ export class ConfigService {
         }
         const url = new URL(raw);
         return {
+            host: url.hostname,
+            port: Number(url.port) || 5432,
+            username: url.username,
+            password: url.password,
+            database: url.pathname.replace(/^\//, ""),
             connectionString: raw,
             options: url.searchParams.get("options") || undefined,
             sslMode: url.searchParams.get("sslmode") || undefined,

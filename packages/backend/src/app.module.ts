@@ -26,6 +26,11 @@ import { HealthModule } from "./health/health.module";
 
                 return {
                     dialect: "postgres" as const,
+                    host: dbConfig.host,
+                    port: dbConfig.port,
+                    username: dbConfig.username,
+                    password: dbConfig.password,
+                    database: dbConfig.database,
                     dialectOptions,
                     autoLoadModels: true,
                     synchronize: false,
