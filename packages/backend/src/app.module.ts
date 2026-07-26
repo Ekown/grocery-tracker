@@ -10,22 +10,28 @@ import { HealthModule } from "./health/health.module";
         SequelizeModule.forRootAsync({
             imports: [ConfigModule],
             inject: [ConfigService],
-            useFactory: (config: ConfigService) => ({
-                dialect: "postgres" as const,
-                ...config.getDatabaseConfig(),
-                dialectOptions:
-                    config.get("NODE_ENV") === "production"
-                        ? {
-                              ssl: {
-                                  require: true,
-                                  rejectUnauthorized: false,
-                              },
-                          }
-                        : undefined,
-                autoLoadModels: true,
-                synchronize: false, // Use migrations only
-                logging: config.get("NODE_ENV") === "development" ? (sql: string) => console.log(sql) : false,
-            }),
+            useFactory: (config: ConfigService) => {
+                const dbConfig = config.getDatabaseConfig();
+                const dialectOptions: Record<string, unknown> = {
+                    connectionString: dbConfig.connectionString,
+                };
+
+                const sslMode = dbConfig.sslMode;
+                if (sslMode && ["require", "verify-ca", "verify-full"].includes(sslMode)) {
+                    dialectOptions.ssl = { require: true, rejectUnauthorized: sslMode === "verify-full" };
+                }
+                if (dbConfig.options) {
+                    dialectOptions.options = dbConfig.options;
+                }
+
+                return {
+                    dialect: "postgres" as const,
+                    dialectOptions,
+                    autoLoadModels: true,
+                    synchronize: false,
+                    logging: config.get("NODE_ENV") === "development" ? (sql: string) => console.log(sql) : false,
+                };
+            },
         }),
     ],
 })

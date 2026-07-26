@@ -5,13 +5,11 @@ import path from "path";
 /** Loads .env from the monorepo root */
 dotenv.config({ path: path.resolve(__dirname, "../../../../.env") });
 
-/** Parsed connection details extracted from DATABASE_URL */
+/** Connection details extracted from DATABASE_URL */
 export interface DatabaseConfig {
-    host: string;
-    port: number;
-    username: string;
-    password: string;
-    database: string;
+    connectionString: string;
+    options?: string;
+    sslMode?: string;
 }
 
 /** Simple config accessor wrapping process.env */
@@ -33,7 +31,7 @@ export class ConfigService {
         return parsed;
     }
 
-    /** Parses DATABASE_URL into connection components */
+    /** Returns the raw DATABASE_URL and parsed options */
     getDatabaseConfig(): DatabaseConfig {
         const raw = process.env.DATABASE_URL;
         if (!raw) {
@@ -41,11 +39,9 @@ export class ConfigService {
         }
         const url = new URL(raw);
         return {
-            host: url.hostname,
-            port: Number(url.port) || 5432,
-            username: decodeURIComponent(url.username),
-            password: decodeURIComponent(url.password),
-            database: url.pathname.replace(/^\//, ""),
+            connectionString: raw,
+            options: url.searchParams.get("options") || undefined,
+            sslMode: url.searchParams.get("sslmode") || undefined,
         };
     }
 }
